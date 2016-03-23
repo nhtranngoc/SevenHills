@@ -1,0 +1,15 @@
+{
+  "name": "SevenHillsMockup",
+  "version": "0.0.5",
+  "description": "Frontend mockup for Seven Hills database",
+  "author": "Nam Tran",
+  "contributor": "Mike DiMilia",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "forever": "sudo forever server.js"
+  },
+  "dependencies": {
+    "express": "~4.9.0"
+  }
+}
