@@ -25,6 +25,16 @@ app.get('/index', function(req, res) {
   res.sendFile(path.join(__dirname, '/public/search.html'));
 });
 
+app.get('/random', function(req, res){
+  console.log("RANDOM REQUEST");
+  res.sendFile(path.join(__dirname, '/public/random.html'));
+});
+
+app.get('/addsoln', function(req, res){
+  console.log("Hey boss someone wants to add some new solutions");
+  res.sendFile(path.join(__dirname, '/public/addSoln.html'));
+});
+
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '/index.html'));
