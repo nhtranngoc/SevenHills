@@ -22,7 +22,7 @@ app.get('/index', function(req, res) {
   // console.log(req.body);
   //---------------------------------
 
-  res.sendFile(path.join(__dirname, '/search.html'));
+  res.sendFile(path.join(__dirname, '/public/search.html'));
 });
 
 
