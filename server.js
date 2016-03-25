@@ -27,7 +27,7 @@ app.get('/index', function(req, res) {
 
 app.get('/random', function(req, res){
   console.log("RANDOM REQUEST");
-  res.sendFile(path.join(__dirname, '/public/random.html'));
+  res.sendFile(path.join(__dirname, '/public/solution.html'));
 });
 
 app.get('/addsoln', function(req, res){
