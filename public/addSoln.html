@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Store all this locally? -->
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <!-- <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> -->
+    <!-- <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css" rel="stylesheet" type="text/css"> -->
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating/1.3.2/bootstrap-rating.min.js"></script>
@@ -16,7 +19,17 @@
           style: 'btn-info',
           size: 4
       });
-  </script>
+
+        $('.rating').rating({
+          extendSymbol: function (rate) {
+            $(this).tooltip({
+              container: 'body',
+              placement: 'bottom',
+              title: 'Rate ' + rate
+          });
+        }
+    });
+</script>
 </head>
 
 <body>
@@ -37,7 +50,7 @@
             <div class="collapse navbar-collapse" id="navbar-ex-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active">
-                        <a href="#">Home</a>
+                        <a href="index.html">Home</a>
                     </li>
                     <li>
                         <a href="#">Contacts</a>
@@ -63,7 +76,7 @@
                 <div class="col-md-12">
 
                     <!-- @TODO: Add help text -->
-                    <form class="form-horizontal" role="form">
+                    <form class="form-horizontal" role="form" action="/add" method="post">
                         <div class="form-group">
                             <div class="col-sm-2">
                                 <label for="solName" class="control-label">Solution Name</label>
@@ -120,7 +133,10 @@
                           </select>
                       </div>
                       <div class='col-sm-2'>
-                        <button type="button" class="btn btn-default pull-right">Add Material</button>
+                        <button type="button" class="btn btn-default pull-right" data-toggle="collapse" data-target="#material">Add Material</button>
+                    </div>
+                    <div class="form-group collapse" id="material">
+                        Yo dawg
                     </div>
                 </div>
                 <div class="form-group">
