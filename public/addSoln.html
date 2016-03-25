@@ -23,6 +23,12 @@
         </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating/1.3.2/bootstrap-rating.min.js">
         </script>
+        <script src="/js/main.js">
+        </script>
+        <script src="http://underscorejs.org/underscore-min.js">
+        </script>
+        <script src="/js/template.js">
+        </script>
         <script>
             $('.selectpicker').selectpicker({
             style: 'btn-info',
@@ -37,9 +43,12 @@
             });
             }
             });
+            function doSomething(){
+            alert('I am so good at naming things.');
+            }
         </script>
     </head>
-    <body>
+    <body onload="getTag('/getTag')">
         <div class="navbar navbar-default">
             <div class="container">
                 <div class="navbar-header">
@@ -122,38 +131,6 @@
                                 </div>
                                 <div class="col-sm-10">
                                     <select class="selectpicker" data-live-search="true" id="solCat" multiple>
-                                        <option>
-                                            High Mobility User
-                                        </option>
-                                        <option>
-                                            Low Mobility User
-                                        </option>
-                                        <option>
-                                            Light Touch
-                                        </option>
-                                        <option>
-                                            Heavy Touch
-                                        </option>
-                                        <option>
-                                            Communication Aid
-                                        </option>
-                                        <option>
-                                            Mobility Aid
-                                        </option>
-                                        <option>
-                                            Recreational
-                                        </option>
-                                        <option>
-                                            Seating/Positioning Aid
-                                        </option>
-                                        <option>
-                                            Recreational
-                                        </option>
-                                        <option>
-                                            Sensory Aid
-                                        </option>
-                                        Reading/Writing Aid
-                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -166,39 +143,6 @@
                                 </div>
                                 <div class="col-sm-8">
                                     <select class="selectpicker" data-live-search="true" id="solMat" multiple>
-                                        <option>
-                                            High Mobility User
-                                        </option>
-                                        <option>
-                                            Low Mobility User
-                                        </option>
-                                        <option>
-                                            Light Touch
-                                        </option>
-                                        <option>
-                                            Heavy Touch
-                                        </option>
-                                        <option>
-                                            Communication Aid
-                                        </option>
-                                        <option>
-                                            Mobility Aid
-                                        </option>
-                                        <option>
-                                            Recreational
-                                        </option>
-                                        <option>
-                                            Seating/Positioning Aid
-                                        </option>
-                                        <option>
-                                            Recreational
-                                        </option>
-                                        <option>
-                                            Sensory Aid
-                                        </option>
-                                        <option>
-                                            Reading/Writing Aid
-                                        </option>
                                     </select>
                                 </div>
                                 <div class='col-sm-2'>
@@ -234,7 +178,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-sm-offset-2 col-sm-10">
-                                                        <button type="submit" class="btn btn-default">
+                                                        <button type="button" onclick="doSomething()" class="btn btn-default">
                                                             Add material
                                                         </button>
                                                     </div>
