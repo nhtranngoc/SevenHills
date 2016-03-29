@@ -10,7 +10,10 @@
     "forever": "sudo forever server.js"
   },
   "dependencies": {
-    "express": "~4.9.0",
-    "body-parser": "~1.15.0"
+    "body-parser": "^1.15.0",
+    "express": "*",
+    "file-stream-rotator": "*",
+    "morgan": "*",
+    "serve-favicon": "^2.3.0"
   }
 }
