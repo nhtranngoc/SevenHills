@@ -7,8 +7,8 @@ This is a front-end mockup for Seven Hills foundation's IQP project on developin
 #### Installation & Run
 
     1. Install npm if you don't already have it.
-    2. Install bower: **npm install bower**
-    3. Install dependencies: **npm install**
+    2. Install bower: ** npm install bower **
+    3. Install dependencies: ** npm install **
     4. Install bower dependencies: **cd public && bower install**
     5. Run from main directory: **npm start** or **node server.js**
 
