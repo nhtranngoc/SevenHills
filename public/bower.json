@@ -26,6 +26,7 @@
   ],
   "dependencies": {
     "bootstrap": "^3.3.6",
-    "font-awesome": "^4.5.0"
+    "font-awesome": "^4.5.0",
+    "bootstrap-select": "^1.10.0"
   }
 }
