@@ -25,3 +25,12 @@ function handleRes(req) {
 function buildSol(id) {
     document.querySelector("#solCat").innerHTML += tag(id);
 }
+
+function doThis() {
+    var parser = document.createElement('a');
+    parser.href = window.location.href;
+    placeholder = decodeURIComponent(parser.search.split("=")[1]);
+    document.getElementById("changeThis").value = placeholder;
+    randomInt = Math.floor(Math.random() * 100);
+    document.getElementById('changeThisToo').innerText = randomInt + " results for " + "\"" + placeholder + "\"";
+}
