@@ -4,16 +4,16 @@
 		<div class="col-md-12 text-center">
 			<h1> Assistive Technology Search</h1>
 			<br>
-			<form action=/index method=get style="display:block; text-align: center">
+			<form novalidate>
 				<div class=form-group>
 					<div class=col-md-11>
-						<input type=text name=search class="form-control input-lg" id=inputEmail3/>
+						<input type=text name=search ng-model="search" class="form-control input-lg" id=inputEmail3/>
 						<br>
 						<br>
 					</div>
 
 					<div class=col-md-1>
-						<button class="btn btn-lg btn-default" type=submit> Search </button>
+						<button class="btn btn-lg btn-default" type="button" ng-click="submitSearch()"> Search </button>
 					</div>
 				</div>
 

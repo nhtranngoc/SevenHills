@@ -37,6 +37,12 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use('/', primaryRoutes);
+
+app.get('/index', function(req, res){
+  console.log(req.query.search);
+  res.json({'tagName':'Mobility'})  
+})
+
 var port = process.env.PORT || 80;
 
 app.listen(port, function() {
