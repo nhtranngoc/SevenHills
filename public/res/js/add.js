@@ -11,7 +11,6 @@ $('.rating').rating({
         });
     }
 });
-
 function doSomething() {
     alert('I am so good at naming things.');
 }

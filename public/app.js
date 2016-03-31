@@ -22,6 +22,10 @@ angular.module('sevenHillsApp', ['ngRoute', 'ngResource'])
       templateUrl: 'views/solution.html',
       controller: 'solutionController'
     })
+    .when('/addMat', {
+      templateUrl: 'views/addMat.html',
+      controller: 'addMatController'
+    })
     .otherwise({ redirectTo: '/' });
   });
 
