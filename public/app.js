@@ -1,31 +1,60 @@
-angular.module('sevenHillsApp', ['ngRoute', 'ngResource'])
+angular.module('sevenHillsApp', ['ui.router', 'ncy-angular-breadcrumb'])
+  .config(function($breadcrumbProvider) {
+    $breadcrumbProvider.setOptions({
+      prefixStateName: 'home'
+    });
+  })
   // Routing Configuration
-  .config(function ($routeProvider) {
-  $routeProvider
-    .when('/', {
+  .config(function ($stateProvider, $urlRouterProvider) {
+  $urlRouterProvider.otherwise("/");
+  $stateProvider
+    .state('home', {
+      url: "/",
       templateUrl: 'views/main.html',
-      controller: 'mainController'
+      controller: 'mainController',
+      ncyBreadcrumb:{
+        label: 'Home'
+      }
     })
-    .when('/random', {
+    .state('random', {
+      url: '/random',
       templateUrl: 'views/random.html',
-      controller: 'randomController'
+      controller: 'randomController',
+      ncyBreadcrumb:{
+        label: 'Random'
+      }
     })
-    .when('/search', {
+    .state('search', {
+      url: '/search',
       templateUrl: 'views/search.html',
-      controller: 'searchController'
+      controller: 'searchController',
+      ncyBreadcrumb:{
+        label: 'Search Results'
+      }
     })
-    .when('/add', {
+    .state('add', {
+      url: '/add',
       templateUrl: 'views/add.html',
-      controller: 'addController'
+      controller: 'addController',
+      ncyBreadcrumb:{
+        label: 'Add Solution'
+      }
     })
-    .when('/solution', {
-      templateUrl: 'views/solution.html',
-      controller: 'solutionController'
-    })
-    .when('/addMat', {
+    .state('add.material', {
+      url: '/material',
       templateUrl: 'views/addMat.html',
-      controller: 'addMatController'
+      controller: 'addMatController',
+      ncyBreadcrumb:{
+        label: 'Add Material'
+      }
     })
-    // .otherwise({ redirectTo: '/' });
+    .state('solution', {
+      url: '/solution',
+      templateUrl: 'views/solution.html',
+      controller: 'solutionController',
+      ncyBreadcrumb:{
+        label: 'Solution'
+      }
+    })
   });
 

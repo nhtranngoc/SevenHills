@@ -59,11 +59,12 @@
                             </select>
                         </div>
                         <div class='col-sm-2'>
-                            <a class="btn btn-default pull-right" href="#/addMat">
+                            <a class="btn btn-default pull-right" ui-sref='add.material' data-toggle="collapse" data-target="#partialAddMat">
                                 Add Material
                             </a>
                         </div>
                     </div>
+                    <div class="form-group" ui-view id="partialAddMat"></div>
                     <div class="form-group">
                         <div class="col-sm-2">
                             <label for="solTime" class="control-label">
