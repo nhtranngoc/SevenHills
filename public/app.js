@@ -1,4 +1,4 @@
-angular.module('sevenHillsApp', ['ui.router', 'ncy-angular-breadcrumb'])
+angular.module('sevenHillsApp', ['ngSanitize', 'ui.router', 'ncy-angular-breadcrumb', 'ui.select'])
   .config(function($breadcrumbProvider) {
     $breadcrumbProvider.setOptions({
       prefixStateName: 'home'
