@@ -10,7 +10,7 @@ var mysql = require('mysql');
 var primaryRoutes = require('./routes/main.js');
 
 var connection = mysql.createConnection({
-    host: '10.1.2.101',
+    host: '130.215.124.111',
     user: 'user',
     password: 'password',
     database: 'sevenhillsdb'
