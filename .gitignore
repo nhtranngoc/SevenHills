@@ -78,4 +78,5 @@ bower_components/
 
 tree.md
 test*
+*test.*
 elasticsearch/

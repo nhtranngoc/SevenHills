@@ -43,6 +43,12 @@ app.get('/index', function(req, res){
   res.json({'tagName':'Mobility'})  
 })
 
+app.post('/submit', function(req, res){
+  var formSubmit = req.body;
+  console.log(formSubmit);
+  res.send('Good job');
+})
+
 var port = process.env.PORT || 80;
 
 app.listen(port, function() {

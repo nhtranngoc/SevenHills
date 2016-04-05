@@ -1,5 +1,5 @@
 angular.module('sevenHillsApp')
-.controller('addController', function($scope) {
+.controller('addController', function($scope, $http) {
     $scope.tables = [{
         id: 1,
         description: "Cup Holder",
@@ -53,6 +53,7 @@ angular.module('sevenHillsApp')
     $scope.addMat = function() {
         var cur = angular.copy($scope.mat);
         $scope.formItems.push(cur);
+        $scope.mat = {};
         console.log($scope.formItems);
     }
     $scope.clear = function($event, $select) {
@@ -72,5 +73,37 @@ angular.module('sevenHillsApp')
         if (index > -1){
             $scope.formItems.splice(index, 1);
         }
+    }
+    $scope.addNewTag = function($item){
+        var cur = angular.copy($item);
+        $scope.category.push(cur);
+    }
+    $scope.removeTag = function($item){
+        console.log($item);
+        var index = $scope.category.indexOf($item);
+        if (index > -1){
+            $scope.category.splice(index, 1);
+        }
+    }
+    $scope.refreshDiff = function(){
+        console.log($scope.solDiff);
+    }
+    $scope.packAndSubmit = function(){
+        var formInfo = {
+            Name:$scope.solName,
+            Description:$scope.solDes,
+            Category:$scope.category,
+            Materials:$scope.formItems,
+            Time:$scope.solTime,
+            Difficulty:$scope.solDiff,
+            Instruction:$scope.solInst
+        };
+        $http.post('/submit', formInfo
+            ).success(function (data, status, headers, config){
+                console.log(data);
+            }
+            ).error(function (data, status, headers, config){
+                console.log(status, data);
+            });
     }
 })
