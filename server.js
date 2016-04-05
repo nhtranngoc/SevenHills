@@ -16,6 +16,20 @@ var connection = mysql.createConnection({
     database: 'sevenhillsdb'
 });
 
+connection.connect(function(err){
+    if(err){
+    console.log('Error connecting to Db');
+    return;
+  }
+  console.log('Connection established');
+});
+
+connection.end(function(err) {
+  // The connection is terminated gracefully
+  // Ensures all previously enqueued queries are still
+  // before sending a COM_QUIT packet to the MySQL server.
+});
+
 var app = express();
 
 var logDirectory = __dirname + '/log';
@@ -45,6 +59,18 @@ app.get('/index', function(req, res){
 
 app.post('/submit', function(req, res){
   var formSubmit = req.body;
+  connection.query('SELECT COUNT(*) from Solutions', function(err,rows,fields) {
+      connection.end();
+      console.log(rows);
+    //   if(!err){
+    //      var numofSolutions = rows;
+    //      var solution = {solutionid = numofSolutions+1, SolutionName = formSubmit.Name, Description = formSubmit.Description, Difficulty = formSubmit.Diff, Instruction = formSubmit.Instruction, EstimatedTotalCost = formSubmit.Cost, Time = formSubmit.Time};
+    //     con.query('INSERT INTO Solutions SET ?', solution,function(err,res)){
+    //         if(err) throw err;
+    //     }
+          
+    //  }
+  })
   console.log(formSubmit);
   res.send('Good job');
 })
