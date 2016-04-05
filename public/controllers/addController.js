@@ -95,7 +95,8 @@ angular.module('sevenHillsApp')
             Category:$scope.category,
             Materials:$scope.formItems,
             Time:$scope.solTime,
-            Difficulty:$scope.solDiff,
+            Difficulty: parseInt($scope.solDiff),
+            Cost: $scope.solCost,
             Instruction:$scope.solInst
         };
         $http.post('/submit', formInfo
