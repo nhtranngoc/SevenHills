@@ -46,8 +46,14 @@
                             </label>
                         </div>
                         <div class="col-sm-10">
-                            <select class="selectpicker" data-live-search="true" id="solCat" multiple="">
-                            </select>
+                            <ui-select multiple="" ng-model="category" tagging="" tagging-label="(new)" theme="bootstrap">
+                                <ui-select-match placeholder="Select tags, or create new ones">
+                                    {{$item}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="tag in tags | filter:$select.search">
+                                    {{tag}}
+                                </ui-select-choices>
+                            </ui-select>
                         </div>
                     </div>
                     <div class="form-group">
@@ -153,7 +159,6 @@
                             </table>
                         </div>
                     </div>
-                    <br/>
                     <div class="form-group">
                         <div class="col-sm-2">
                             <label class="control-label" for="solTime">
@@ -169,50 +174,52 @@
                             </label>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-sm-2">
-                            <label class="control-label" for="solDifficulty">
-                                Difficulty
-                            </label>
-                        </div>
-                        <div class="col-sm-10">
-                            <input class="rating" data-empty="glyphicon glyphicon-star-empty" data-filled="glyphicon glyphicon-star" id="solDifficulty" type="hidden"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-2">
-                            <label class="control-label" for="solCost">
-                                Cost
-                            </label>
-                        </div>
-                        <div class="col-sm-1">
-                            <input class="form-control" id="solCost" min="0" type="number"/>
-                        </div>
-                        <div class="col-sm-1">
-                            <label class="control-label">
-                                USD
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-2">
-                            <label class="control-label" for="solInstruction">
-                                Instructions
-                            </label>
-                        </div>
-                        <div class="col-sm-10">
-                            <textarea class="form-control" id="solInstruction" rows="3" type="text">
-                            </textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button class="btn btn-default" type="submit">
-                                Submit
-                            </button>
-                        </div>
-                    </div>
-                </form>
+<!--                 </form>
+            </div> -->
+            <div class="form-group">
+                <div class="col-sm-2">
+                    <label class="control-label" for="solDifficulty">
+                        Difficulty
+                    </label>
+                </div>
+                <div class="col-sm-10">
+                    <input class="rating" data-empty="glyphicon glyphicon-star-empty" data-filled="glyphicon glyphicon-star" id="solDifficulty" type="hidden"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2">
+                    <label class="control-label" for="solCost">
+                        Cost
+                    </label>
+                </div>
+                <div class="col-sm-1">
+                    <input class="form-control" id="solCost" min="0" type="number"/>
+                </div>
+                <div class="col-sm-1">
+                    <label class="control-label">
+                        USD
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2">
+                    <label class="control-label" for="solInstruction">
+                        Instructions
+                    </label>
+                </div>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="solInstruction" rows="3" type="text">
+                    </textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button class="btn btn-default" type="submit">
+                        Submit
+                    </button>
+                </div>
+            </div>
+            </form>
             </div>
         </div>
     </div>

@@ -9,6 +9,8 @@ angular.module('sevenHillsApp')
         description: "iPhone",
         vendor: "Apple"
     }]
+    $scope.category = [];
+    $scope.tags = ['Mobility', 'High Tech', 'Low Tech', 'Awesome Tech'];
     $scope.refreshResults = function($select) {
         var search = $select.search,
             list = angular.copy($select.items),
