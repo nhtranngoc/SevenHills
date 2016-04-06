@@ -1,9 +1,9 @@
-# Seven Hills Foundation Mockup
+# Seven Hills Foundation
 
 #### Authors: Nam Tran Ngoc, Mike DiMilia
 With help from Ivan Melnikov (@ivanempire)
 
-This is a front-end mockup for Seven Hills foundation's IQP project on developing a database/search engine for searching appropriate Assistive Technology devices. 
+This is a web application for Seven Hills foundation's IQP project on developing a database/search engine for searching appropriate Assistive Technology devices. 
 
 #### Installation & Run
 
@@ -45,6 +45,22 @@ Create a file called `secrets.json` using your favorite text editor. The secrets
     }
 
 Replace `$variables` with your own configurations and you're good to go!
+
+#### Deployment
+
+(Nothing here yet)
+
+#### To do List:
+
+- Fix callback hell
+- Query tags and material lists
+- Form validation
+- Add upload images/gallery feature
+- View/edit solution
+- Figure out deployment methods
+- Testing (unit, regression...)
+- Database indexing
+- Browsers/Platform compatibility testing
 
 #### Folder Structure
 
