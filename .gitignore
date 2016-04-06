@@ -76,7 +76,7 @@ sftp-config.json
 
 bower_components/
 
-secret.json
+config/secret.json
 tree.md
 test*
 *test.*
