@@ -4,12 +4,12 @@
 		<div class="col-md-12 text-center">
 			<h1> Assistive Technology Search</h1>
 			<br>
-			<form novalidate ng-submit="submitSearch()">
+			<form novalidate role="form" ng-submit="submitSearch()">
 				<div class=form-group>
 					<div class=col-md-11>
-						<input type=text name=search ng-model="search" class="form-control input-lg" id=inputEmail3/>
-						<br>
-						<br>
+						<input type=text name=search ng-model="search" class="form-control input-lg"/>
+						<br/>
+						<br/>
 					</div>
 
 					<div class=col-md-1>
@@ -18,7 +18,7 @@
 				</div>
 
 				<div class=col-sm-4 style="margin: 0 auto;float:none">
-					<a ui-sref="random" class="btn btn-lg btn-default"> Random Solution </a>
+					<a ui-sref="solution" class="btn btn-lg btn-default"> Solution of The Day </a>
 					<a ui-sref="add" class="btn btn-lg btn-default"> Add Solution </a>
 				</div>
 			</form>

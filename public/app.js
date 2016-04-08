@@ -1,4 +1,4 @@
-angular.module('sevenHillsApp', ['ngSanitize', 'ui.router', 'ncy-angular-breadcrumb', 'ui.select'])
+angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-angular-breadcrumb', 'ui.select'])
   .config(function($breadcrumbProvider) {
     $breadcrumbProvider.setOptions({
       prefixStateName: 'home'
@@ -38,14 +38,6 @@ angular.module('sevenHillsApp', ['ngSanitize', 'ui.router', 'ncy-angular-breadcr
       controller: 'addController',
       ncyBreadcrumb:{
         label: 'Add Solution'
-      }
-    })
-    .state('add.material', {
-      url: '/material',
-      templateUrl: 'views/addMat.html',
-      controller: 'addMatController',
-      ncyBreadcrumb:{
-        label: 'Add Material'
       }
     })
     .state('solution', {
