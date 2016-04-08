@@ -1,5 +1,5 @@
 angular.module('sevenHillsApp')
-.controller('addController', function($scope, $http) {
+.controller('addController', function($scope, $http, $state) {
     $scope.materials = [];
     $scope.$on('$stateChangeSuccess', function () {
         $http.get('/tags').then(
@@ -114,14 +114,15 @@ angular.module('sevenHillsApp')
         $http.post('/submit', formInfo).then(
             function(data){
                 console.log(data);
-                $scope.addSolForm.$setPristine();
-                $scope.solName = "";
-                $scope.category = [];
-                $scope.formItems = [];
-                $scope.solTime = {};
-                $scope.solDiff = "";
-                $scope.solCost = {};
-                $scope.solInst = "";
+                // $scope.addSolForm.$setPristine();
+                // $scope.solName = "";
+                // $scope.category = [];
+                // $scope.formItems = [];
+                // $scope.solTime = {};
+                // $scope.solDiff = "";
+                // $scope.solCost.$setPristine();
+                // $scope.solInst = "";
+                $state.go($state.current, {}, {reload: true});//second parameter is for $stateParams
                 alert('Form submitted successfully! Thanks Abby!');
             },
             function(data, status){
