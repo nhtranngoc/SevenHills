@@ -53,9 +53,9 @@ app.use(bodyParser.urlencoded({
 app.use('/', primaryRoutes);
 // DATABASE QUERY ===================================================================
 //Super hacky substring search engine.
-app.post('/index', function(req, res) {
-    console.log(req.body.search);
-    var searchArr = req.body.search.split(" ");
+app.get('/index', function(req, res) {
+    console.log(req.query.search);
+    var searchArr = req.query.search.split(" ");
     queryStr = 'SELECT * from solutions NATURAL JOIN solutiontags WHERE ';
     var queryArr = [];
     searchArr.forEach(function(element, index, array){
@@ -73,6 +73,12 @@ app.post('/index', function(req, res) {
         res.send(rows);
     })
 })
+
+// app.get('/index', function(req, res){
+//     console.log(req.query.search);
+//     res.send({name:'Test Name'});
+// })
+
 app.get('/tags', function(req, res) {
     connection.query('SELECT * from tags', function(err, rows, fields) {
         if (err) throw err;

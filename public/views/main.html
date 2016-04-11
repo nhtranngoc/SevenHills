@@ -7,13 +7,13 @@
 			<form novalidate role="form" ng-submit="submitSearch()">
 				<div class=form-group>
 					<div class=col-md-11>
-						<input type=text name=search ng-model="search" class="form-control input-lg"/>
+						<input type=text ng-model="search" class="form-control input-lg"/>
 						<br/>
 						<br/>
 					</div>
 
 					<div class=col-md-1>
-						<button class="btn btn-lg btn-default" ui-sref="search" type="button" ng-click="submitSearch()"> Search </button>
+						<button class="btn btn-lg btn-default" ui-sref="search({search:search})" type="button" ng-click="submitSearch()"> Search </button>
 					</div>
 				</div>
 
