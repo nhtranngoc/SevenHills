@@ -5,4 +5,6 @@ angular.module('sevenHillsApp')
 	    {
 	    	console.log(rows);
 	    }
+	    
+	    $scope.solution = rows[0];
 	})
