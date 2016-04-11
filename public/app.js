@@ -49,7 +49,7 @@ angular.module('sevenHillsApp', ['ngSanitize', 'ui.router', 'ncy-angular-breadcr
       }
     })
     .state('solution', {
-      url: '/solution',
+      url: '/solution/:solutionID',
       templateUrl: 'views/solution.html',
       controller: 'solutionController',
       ncyBreadcrumb:{
