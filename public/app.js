@@ -25,8 +25,7 @@ angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-a
       }
     })
     .state('search', {
-      //Change to /search/:searchString
-      url: '/index?search',
+      url: '/search',
       templateUrl: 'views/search.html',
       controller: 'searchController',
       ncyBreadcrumb:{
@@ -42,7 +41,7 @@ angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-a
       }
     })
     .state('solution', {
-      url: '/solution/:solutionid',
+      url: '/solution/:solutionID',
       templateUrl: 'views/solution.html',
       controller: 'solutionController',
       ncyBreadcrumb:{
