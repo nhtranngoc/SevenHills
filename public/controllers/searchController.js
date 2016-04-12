@@ -6,4 +6,5 @@ angular.module('sevenHillsApp')
 		$scope.searchBar = $scope.searchString;
 		$scope.results = searchResolve;
 		$scope.num = $scope.results.length;
+		// console.log($scope.results[0])
 	})
