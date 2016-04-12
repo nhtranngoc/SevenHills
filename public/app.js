@@ -59,13 +59,18 @@ angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-a
       templateUrl: 'views/solution.html',
       controller: 'solutionController',
       resolve: {
-        solutionResolve: 
-          function($http, $stateParams) {
-            return $http.post('/solutionid', {solutionID: parseInt($stateParams.solutionID)}).then(
+        solutionResolve: function($http, $stateParams) {
+          return $http.post('/solutionid', {solutionID: parseInt($stateParams.solutionID)}).then(
             function(data){
               return data.data;
             })
-          }
+        },
+        materialResolve: function($http, $stateParams) {
+          return $http.post('/matid', {matid: parseInt($stateParams.solutionID)}).then(
+            function(data){
+              return data.data;
+            })
+        }
         },
       ncyBreadcrumb:{
         label: 'Solution'

@@ -72,10 +72,6 @@ app.get('/index', function(req, res) {
             res.send(rows);
         })
     })
-    // app.get('/index', function(req, res){
-    //     console.log(req.query.search);
-    //     res.send({name:'Test Name'});
-    // })
 app.get('/tags', function(req, res) {
     connection.query('SELECT * from tags', function(err, rows, fields) {
         if (err) throw err;
@@ -91,6 +87,13 @@ app.get('/materials', function(req, res) {
 app.post('/solutionid', function(req, res) {
     console.log(req.body);
     connection.query('SELECT * from Solutions WHERE solutionID = ?', req.body.solutionID, function(err, rows, fields) {
+        console.log(rows);
+        res.send(rows);
+    })
+})
+app.post('/matid', function(req, res){
+    console.log(req.body);
+    connection.query('SELECT materialname, vendor, amount from material NATURAL JOIN requirement where solutionid = ?', req.body.matid, function(err, rows, fileds){
         console.log(rows);
         res.send(rows);
     })

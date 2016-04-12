@@ -8,15 +8,29 @@
     </div>
     <div class="well well-lg">
         <div class="col-sm-2">
-            Time
+            <b>
+                Time
+            </b>
         </div>
         <div class="col-sm-2">
             {{solution.Time}} minutes
         </div>
         <div class="col-sm-2">
-            Difficulty
+            <b>
+                Difficulty
+            </b>
         </div>
-        <input class="rating" data-readonly="" id="star" type="hidden"/>
+        <div class="col-sm-2">
+            <input class="rating" data-readonly="" id="star" type="hidden"/>
+        </div>
+        <div class="col-sm-2">
+            <b>
+                Cost
+            </b>
+        </div>
+        <div class="col-sm-2">
+            {{solution.EstimatedTotalCost}} USD
+        </div>
     </div>
 </div>
 <div class="carousel slide container" data-ride="carousel" id="myCarousel">
@@ -90,19 +104,13 @@
                     {{ $index + 1 }}
                 </td>
                 <td class="col">
-                    {{x.select.MaterialName}}
+                    {{x.materialname}}
                 </td>
                 <td class="col">
-                    {{x.select.Vendor}}
+                    {{x.vendor}}
                 </td>
                 <td class="col">
-                    {{x.quan}}
-                </td>
-                <td class="col">
-                    <a class="btn btn-xs btn-link pull-right" ng-click="clearRow($event, x)">
-                        <i class="glyphicon glyphicon-remove">
-                        </i>
-                    </a>
+                    {{x.amount}}
                 </td>
             </tr>
         </tbody>
