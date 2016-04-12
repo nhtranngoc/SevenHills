@@ -30,8 +30,18 @@ angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-a
       controller: 'searchController',
       resolve: {
         searchResolve: 
-          function($http, $stateParams)
-      }
+          function($http, $stateParams){
+            return $http({
+              method: 'GET',
+              url: '/index',
+              params: {
+                'search': $stateParams.search
+              }
+            }).then(function(data){
+              return data.data
+            })
+          }
+      },
       ncyBreadcrumb:{
         label: 'Search Results'
       }
