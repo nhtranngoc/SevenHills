@@ -1,4 +1,4 @@
-angular.module('sevenHillsApp', ['ngSanitize', 'ui.router', 'ncy-angular-breadcrumb', 'ui.select'])
+angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-angular-breadcrumb', 'ui.select'])
   .config(function($breadcrumbProvider) {
     $breadcrumbProvider.setOptions({
       prefixStateName: 'home'
@@ -25,9 +25,23 @@ angular.module('sevenHillsApp', ['ngSanitize', 'ui.router', 'ncy-angular-breadcr
       }
     })
     .state('search', {
-      url: '/search',
+      url: '/index?search',
       templateUrl: 'views/search.html',
       controller: 'searchController',
+      resolve: {
+        searchResolve: 
+          function($http, $stateParams){
+            return $http({
+              method: 'GET',
+              url: '/index',
+              params: {
+                'search': $stateParams.search
+              }
+            }).then(function(data){
+              return data.data
+            })
+          }
+      },
       ncyBreadcrumb:{
         label: 'Search Results'
       }
@@ -40,16 +54,8 @@ angular.module('sevenHillsApp', ['ngSanitize', 'ui.router', 'ncy-angular-breadcr
         label: 'Add Solution'
       }
     })
-    .state('add.material', {
-      url: '/material',
-      templateUrl: 'views/addMat.html',
-      controller: 'addMatController',
-      ncyBreadcrumb:{
-        label: 'Add Material'
-      }
-    })
     .state('solution', {
-      url: '/solution',
+      url: '/solution/:solutionID',
       templateUrl: 'views/solution.html',
       controller: 'solutionController',
       ncyBreadcrumb:{

@@ -1,36 +1,48 @@
 angular.module('sevenHillsApp')
-.controller('addController', function($scope, $http) {
-    $scope.tables = [{
-        id: 1,
-        description: "Cup Holder",
-        vendor: "Amarok Technologies"
-    }, {
-        id: 2,
-        description: "iPhone",
-        vendor: "Apple"
-    }]
+.controller('addController', function($scope, $http, $state) {
+    $scope.materials = [];
+    $scope.$on('$stateChangeSuccess', function () {
+        $http.get('/tags').then(
+            function (data){
+                $scope.tags = data.data.map(function(item){
+                    return item['TagName'];
+                })
+                console.log($scope.tags);
+            },
+            function (data, status) {
+                console.log(status, data)
+            })
+        $http.get('/materials').then(
+            function(data){
+                console.log(data.data);
+                //data.data is an array of objects, containing material info.
+                $scope.materials = data.data;
+            },
+            function(data, status){
+                console.log(status, data);
+            })
+    });
     $scope.category = [];
-    $scope.tags = ['Mobility', 'High Tech', 'Low Tech', 'Awesome Tech'];
     $scope.refreshResults = function($select) {
         var search = $select.search,
             list = angular.copy($select.items),
             FLAG = -1;
         // remove last user input
         list = list.filter(function(item) {
-            return item.id !== FLAG;
+            return item.materialid !== FLAG;
         });
         if (!search) {
             console.log("on the list");
             //use the predefined list
             $select.items = list;
-            // $scope.vendor = search.vendor;
+            // $scope.Vendor = search.Vendor;
         } else {
             console.log("not on the list");
             //manually add user input and set selection
             var userInputItem = {
-                id: FLAG,
-                description: search,
-                vendor: "Third Party"
+                materialid: FLAG,
+                MaterialName: search,
+                Vendor: "Third Party"
             };
             $select.items = [userInputItem].concat(list);
             $select.selected = userInputItem;
@@ -38,8 +50,8 @@ angular.module('sevenHillsApp')
     }
     $scope.showVendor = 3;
     $scope.onSelectCallback = function($item) {
-        var obj = $scope.tables.filter(function ( obj ) {
-            return obj.vendor === $item.vendor;
+        var obj = $scope.materials.filter(function ( obj ) {
+            return obj.Vendor === $item.Vendor;
         })[0];
         console.log(obj);
         if (obj == null){
@@ -99,11 +111,21 @@ angular.module('sevenHillsApp')
             Cost: $scope.solCost,
             Instruction:$scope.solInst
         };
-        $http.post('/submit', formInfo
-            ).success(function (data, status, headers, config){
+        $http.post('/submit', formInfo).then(
+            function(data){
                 console.log(data);
-            }
-            ).error(function (data, status, headers, config){
+                // $scope.addSolForm.$setPristine();
+                // $scope.solName = "";
+                // $scope.category = [];
+                // $scope.formItems = [];
+                // $scope.solTime = {};
+                // $scope.solDiff = "";
+                // $scope.solCost.$setPristine();
+                // $scope.solInst = "";
+                $state.go($state.current, {}, {reload: true});//second parameter is for $stateParams
+                alert('Form submitted successfully! Thanks Abby!');
+            },
+            function(data, status){
                 console.log(status, data);
             });
     }

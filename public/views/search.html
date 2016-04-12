@@ -10,10 +10,10 @@
         </div>
         <div class="row">
             <div class="col-md-offset-3 col-md-6">
-                <form role="form" action="/index" method="get">
+                <form action="/index" method="get" role="form">
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="text" ng-model="searchBar" name="search" class="form-control" id="changeThis"/>
+                            <input class="form-control" name="search" ng-model="searchBar" type="text"/>
                             <span class="input-group-btn">
                                 <button class="btn btn-success" type="submit">
                                     Go
@@ -69,17 +69,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <hr/>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
                 <h3 id="changeThisToo">
-                    42 results found&nbsp;
+                    {{num}} results found for "{{searchString}}":
                 </h3>
             </div>
         </div>
@@ -87,92 +78,24 @@
 </div>
 <div class="section">
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <ul class="media-list text-left">
-                    <li class="media">
-                        <a class="pull-left" href="#">
-                            <img class="media-object" src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" height="64" width="64"/>
-                        </a>
-                        <div class="media-body">
-                            <h4 class="media-heading">
-                                Pen Grip
-                            </h4>
-                            <p>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
-                            </p>
-                        </div>
-                    </li>
-                    <li class="media">
-                        <a class="pull-left" href="#">
-                            <img class="media-object" src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" height="64" width="64"/>
-                        </a>
-                        <div class="media-body">
-                            <h4 class="media-heading">
-                                Wheelchair Umbrella Holder
-                            </h4>
-                            <p>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
-                            </p>
-                        </div>
-                    </li>
-                    <li class="media">
-                        <a class="pull-left" href="#">
-                            <img class="media-object" src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" height="64" width="64"/>
-                        </a>
-                        <div class="media-body">
-                            <h4 class="media-heading">
-                                Cup Holder
-                                <br/>
-                            </h4>
-                            <p>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
-                            </p>
-                        </div>
-                    </li>
-                    <li class="media">
-                        <a class="pull-left" href="#">
-                            <img class="media-object" src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" height="64" width="64"/>
-                        </a>
-                        <div class="media-body">
-                            <h4 class="media-heading">
-                                iPad Holder
-                            </h4>
-                            <p>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
-                            </p>
-                        </div>
-                    </li>
-                    <li class="media">
-                        <a class="pull-left" href="#">
-                            <img class="media-object" src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" height="64" width="64"/>
-                        </a>
-                        <div class="media-body">
-                            <h4 class="media-heading">
-                                Liftware Spoon
-                            </h4>
-                            <p>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
-                            </p>
-                        </div>
-                    </li>
-                    <li class="media">
-                        <a class="pull-left" href="#">
-                            <img class="media-object" src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" height="64" width="64"/>
-                        </a>
-                        <div class="media-body">
-                            <h4 class="media-heading">
-                            </h4>
-                            <p>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
-                            </p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        <ul class="media-list text-left">
+            <li class="media panel panel-default" ng-repeat="result in results">
+                <a class="pull-left" href="">
+                    <img height="64" width="64" class="media-object" src=""/>
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading panel panel-title">
+                        {{result.SolutionName}}
+                    </h4>
+                    <p>
+                        {{result.Description}}
+                    </p>
+                </div>
+            </li>
+        </ul>
     </div>
 </div>
+<!-- 
 <footer class="section section-primary">
     <div class="container">
         <div class="row">
@@ -229,3 +152,4 @@
         </div>
     </div>
 </footer>
+ -->

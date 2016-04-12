@@ -1,9 +1,9 @@
-# Seven Hills Foundation Mockup
+# Seven Hills Foundation
 
 #### Authors: Nam Tran Ngoc, Mike DiMilia
 With help from Ivan Melnikov (@ivanempire)
 
-This is a front-end mockup for Seven Hills foundation's IQP project on developing a database/search engine for searching appropriate Assistive Technology devices. 
+This is a web application for Seven Hills foundation's IQP project on developing a database/search engine for searching appropriate Assistive Technology devices. 
 
 #### Installation & Run
 
@@ -28,15 +28,46 @@ This is a front-end mockup for Seven Hills foundation's IQP project on developin
         * Angular, Angular-resource, Angular-route
         * jQuery and Font-Awesome
 
+#### Secrets
+
+Since database connection requires IP address, username, password and database name, these settings are kept as a JSON file under config folder. To set up config, do:
+
+    mkdir config
+    cd config
+
+Create a file called `secrets.json` using your favorite text editor. The secrets.json structure should look like this:
+
+    {
+    "host": "$database_address",
+    "user": "$username",
+    "password": "$password",
+    "database": "$database_to_use"
+    }
+
+Replace `$variables` with your own configurations and you're good to go!
+
+#### Deployment
+
+(Nothing here yet)
+
+#### To do List:
+
+- Fix callback hell
+- Query tags and material lists
+- Form validation
+- Add upload images/gallery feature
+- View/edit solution
+- Figure out deployment methods
+- Testing (unit, regression...)
+- Database indexing
+- Browsers/Platform compatibility testing
+
 #### Folder Structure
 
     ├── config
-    ├── data
     ├── err.log
     ├── favicon.ico
     ├── log
-    │   ├── access-20160329.log
-    │   └── access-20160330.log
     ├── npm-debug.log
     ├── out.log
     ├── package.json
@@ -56,17 +87,6 @@ This is a front-end mockup for Seven Hills foundation's IQP project on developin
     │   │   ├── css
     │   │   │   └── stylesheet.css
     │   │   ├── img
-    │   │   │   ├── 10.jpg
-    │   │   │   ├── 1.jpg
-    │   │   │   ├── 2.jpg
-    │   │   │   ├── 3.jpg
-    │   │   │   ├── 4jIot.jpg
-    │   │   │   ├── 4.jpg
-    │   │   │   ├── 5.jpg
-    │   │   │   ├── 6.jpg
-    │   │   │   ├── 7.jpg
-    │   │   │   ├── 8.jpg
-    │   │   │   └── 9.jpg
     │   │   └── js
     │   │       ├── add.js
     │   │       └── main.js
@@ -80,5 +100,4 @@ This is a front-end mockup for Seven Hills foundation's IQP project on developin
     ├── routes
     │   └── main.js
     ├── server.js
-    ├── testDtb.js
     ├── tests
