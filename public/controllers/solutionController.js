@@ -5,6 +5,8 @@ angular.module('sevenHillsApp')
 	    $http.post('/solutionid', {solutionID: solutionID}).then(
 	    	function(response){
 	    		console.log(response);
-	    		console.log(status);
-	    	})
+	    	}, function(response, status){
+	    		console.log(status, response);
+	    	});
+	    $scope.solution = rows[0];
 	})
