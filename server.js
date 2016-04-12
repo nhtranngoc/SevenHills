@@ -54,31 +54,28 @@ app.use('/', primaryRoutes);
 // DATABASE QUERY ===================================================================
 //Super hacky substring search engine.
 app.get('/index', function(req, res) {
-    console.log(req.query.search);
-    var searchArr = req.query.search.split(" ");
-    queryStr = 'SELECT * from solutions NATURAL JOIN solutiontags WHERE ';
-    var queryArr = [];
-    searchArr.forEach(function(element, index, array){
-        queryArr.push("SolutionName LIKE '%" + element + "%'");
-        queryArr.push("Description LIKE '%" + element + "%'");
-        queryArr.push("TagName LIKE '%" + element + "%'");
+        console.log(req.query.search);
+        var searchArr = req.query.search.split(" ");
+        queryStr = 'SELECT * from solutions NATURAL JOIN solutiontags WHERE ';
+        var queryArr = [];
+        searchArr.forEach(function(element, index, array) {
+            queryArr.push("SolutionName LIKE '%" + element + "%'");
+            queryArr.push("Description LIKE '%" + element + "%'");
+            queryArr.push("TagName LIKE '%" + element + "%'");
+        })
+        queryStr += queryArr.join(" OR ") + " Group by solutionid";
+        console.log("FINALIZED QUERY STRING: " + queryStr);
+        connection.query(queryStr, function(err, rows, fields) {
+            if (err) throw err;
+            console.log(rows);
+            console.log("Total number of results: " + rows.length);
+            res.send(rows);
+        })
     })
-    queryStr += queryArr.join(" OR ") + " Group by solutionid";
-    console.log("FINALIZED QUERY STRING: " + queryStr);
-
-    connection.query(queryStr, function(err, rows, fields) {
-        if (err) throw err;
-        console.log(rows);
-        console.log("Total number of results: " + rows.length);
-        res.send(rows);
-    })
-})
-
-// app.get('/index', function(req, res){
-//     console.log(req.query.search);
-//     res.send({name:'Test Name'});
-// })
-
+    // app.get('/index', function(req, res){
+    //     console.log(req.query.search);
+    //     res.send({name:'Test Name'});
+    // })
 app.get('/tags', function(req, res) {
     connection.query('SELECT * from tags', function(err, rows, fields) {
         if (err) throw err;
@@ -91,6 +88,13 @@ app.get('/materials', function(req, res) {
         res.send(rows);
     })
 });
+app.post('/solutionid', function(req, res) {
+    console.log(req.body);
+    connection.query('SELECT * from Solutions WHERE solutionID = ?', req.body.solutionID, function(err, rows, fields) {
+        console.log(rows);
+        res.send(rows);
+    })
+})
 app.post('/submit', function(req, res) {
         var formSubmit = req.body;
         var solution = {
@@ -120,7 +124,6 @@ app.post('/submit', function(req, res) {
                 async.each(formSubmit.Category, function(element, callback) {
                     console.log("Processing tag: " + element);
                     //Check if tag exists
-
                     connection.query('SELECT COUNT(*) as count from tags WHERE TagName = ?', element, function(err, rows, fields) {
                         //If not, add to tag list
                         if (rows[0].count == 0) {
@@ -140,8 +143,8 @@ app.post('/submit', function(req, res) {
                 })
                 callback(null, solutionID);
             },
-            function countMaterials (solutionID, callback){
-                connection.query('SELECT COUNT(*) as count from Material', function(err, rows, fields){
+            function countMaterials(solutionID, callback) {
+                connection.query('SELECT COUNT(*) as count from Material', function(err, rows, fields) {
                     var currentMatCount = rows[0].count;
                     callback(err, currentMatCount, solutionID);
                 })
@@ -156,7 +159,7 @@ app.post('/submit', function(req, res) {
                         console.log("material = element: ");
                         console.log(rows)
                         var matToInsert = {}
-                        if (ifExist == 0){
+                        if (ifExist == 0) {
                             currentMatCount++;
                             matToInsert.MaterialID = currentMatCount;
                             matToInsert.MaterialName = element.select.MaterialName;

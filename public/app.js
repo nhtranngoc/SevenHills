@@ -25,9 +25,13 @@ angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-a
       }
     })
     .state('search', {
-      url: '/search',
+      url: '/index?search',
       templateUrl: 'views/search.html',
       controller: 'searchController',
+      resolve: {
+        searchResolve: 
+          function($http, $stateParams)
+      }
       ncyBreadcrumb:{
         label: 'Search Results'
       }

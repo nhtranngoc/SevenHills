@@ -1,8 +1,12 @@
 angular.module('sevenHillsApp')
-	.controller('solutionController', function($scope, $stateParam){
-	    var solutionID = $stateParams.solutionID;
-	    connection.query('SELECT * from Solutions WHERE solutionID = ?', solutionID, function(err, rows, fields))
-	    {
-	    	console.log(rows);
-	    }
+	.controller('solutionController', function($scope, $stateParams, $http){
+	    var solutionID = parseInt($stateParams.solutionID);
+	    // console.log($stateParams);
+	    $http.post('/solutionid', {solutionID: solutionID}).then(
+	    	function(response){
+	    		console.log(response);
+	    	},
+	    	function(response, status){
+	    		console.log(status);
+	    	})
 	})
