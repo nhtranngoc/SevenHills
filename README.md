@@ -18,10 +18,9 @@ This is a web application for Seven Hills foundation's IQP project on developing
     * Basic Node app structure
     * Bootstrap used for front-end, with routing and front-end handling with AngularJS
     * Routes stored in the 'routes' folder
-        * / returns the index file
-        * /random returns a random solution page
-        * /search returns the search page
-        *Further implementation will possibly combine all of these into one page with AngularJS
+        * Main routes
+        * Database API routes
+        * Upload route
     * With the exception of frameworks, media resources are stored in public/res
     * Frameworks stored in public/bower_components file
         * Boostrap, Bootstrap-rating, Bootstrap-select
@@ -37,12 +36,13 @@ Since database connection requires IP address, username, password and database n
 
 Create a file called `secrets.json` using your favorite text editor. The secrets.json structure should look like this:
 
-    {
-    "host": "$database_address",
-    "user": "$username",
-    "password": "$password",
-    "database": "$database_to_use"
+    "local": {
+        "host": "$hostName",
+        "user": "$userName",
+        "password": "$password",
+        "database": "$databaseName"
     }
+
 
 Replace `$variables` with your own configurations and you're good to go!
 
@@ -52,24 +52,36 @@ Replace `$variables` with your own configurations and you're good to go!
 
 #### To do List:
 
-- Fix callback hell
-- Query tags and material lists
-- Form validation
-- Add upload images/gallery feature
-- View/edit solution
-- Figure out deployment methods
-- Testing (unit, regression...)
-- Database indexing
+- Form validation, with help text
+- Finish upload images/gallery feature
+- Edit solutions
+- UI Unit testing
 - Browsers/Platform compatibility testing
+- Database indexing
 
 #### Folder Structure
-
     ├── config
-    ├── err.log
+    │   ├── multiparty.json
+    │   ├── secret.json
+    │   └── UserController.js
+    ├── coverage
+    │   ├── coverage.json
+    │   ├── lcov.info
+    │   └── lcov-report
+    │       ├── base.css
+    │       ├── index.html
+    │       ├── prettify.css
+    │       ├── prettify.js
+    │       ├── SevenHills
+    │       │   ├── index.html
+    │       │   ├── routes
+    │       │   │   ├── index.html
+    │       │   │   └── main.js.html
+    │       │   └── server.js.html
+    │       ├── sort-arrow-sprite.png
+    │       └── sorter.js
+    ├── cov.html
     ├── favicon.ico
-    ├── log
-    ├── npm-debug.log
-    ├── out.log
     ├── package.json
     ├── public
     │   ├── app.js
@@ -86,7 +98,6 @@ Replace `$variables` with your own configurations and you're good to go!
     │   │   ├── category.json
     │   │   ├── css
     │   │   │   └── stylesheet.css
-    │   │   ├── img
     │   │   └── js
     │   │       ├── add.js
     │   │       └── main.js
@@ -98,6 +109,10 @@ Replace `$variables` with your own configurations and you're good to go!
     │       └── solution.html
     ├── README.md
     ├── routes
-    │   └── main.js
+    │   ├── db.js
+    │   ├── main.js
+    │   └── upload.js
     ├── server.js
-    ├── tests
+    └── test
+        └── test.js
+

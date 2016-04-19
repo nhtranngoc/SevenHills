@@ -6,7 +6,7 @@ var secretFile = ('../config/secret.json');
 var config;
 // CONNECT TO DATABASE =============================================================
 try {
-    config = require(secretFile);
+    config = require(secretFile).local;
 } catch (err) {
     config = {};
     console.log("unable to read file '" + secretFile + "': ", err);
