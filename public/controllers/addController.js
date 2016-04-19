@@ -1,5 +1,5 @@
 angular.module('sevenHillsApp')
-.controller('addController', function($scope, $http, $state) {
+.controller('addController', function($scope, $http, $state, Upload) {
     $scope.materials = [];
     $scope.$on('$stateChangeSuccess', function () {
         $http.get('/tags').then(
@@ -51,7 +51,7 @@ angular.module('sevenHillsApp')
     $scope.showVendor = 3;
     $scope.onSelectCallback = function($item) {
         var obj = $scope.materials.filter(function ( obj ) {
-            return obj.Vendor === $item.Vendor;
+            return obj.MaterialName === $item.MaterialName;
         })[0];
         console.log(obj);
         if (obj == null){
@@ -97,10 +97,29 @@ angular.module('sevenHillsApp')
             $scope.category.splice(index, 1);
         }
     }
-    $scope.refreshDiff = function(){
-        console.log($scope.solDiff);
+    $scope.clearThumbnail = function(index){
+        $scope.$files.splice(index, 1);
     }
-    $scope.packAndSubmit = function(){
+    // for multiple files:
+    $scope.uploadFiles = function (files) {
+      if (files && files.length) {
+          Upload.upload({
+            url: 'upload/url',
+            method: 'POST',
+            data: {
+                files: files
+            }
+            }).then(function (resp) {
+            console.log('Success' + resp.config);
+            // console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+        }, function (resp) {
+            console.log('Error status: ' + resp.status);
+        }, function (evt) {
+            $scope.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+        });
+      }
+    }
+    $scope.packAndSubmit = function(files){
         var formInfo = {
             Name:$scope.solName,
             Description:$scope.solDes,
@@ -114,16 +133,8 @@ angular.module('sevenHillsApp')
         $http.post('/submit', formInfo).then(
             function(data){
                 console.log(data);
-                // $scope.addSolForm.$setPristine();
-                // $scope.solName = "";
-                // $scope.category = [];
-                // $scope.formItems = [];
-                // $scope.solTime = {};
-                // $scope.solDiff = "";
-                // $scope.solCost.$setPristine();
-                // $scope.solInst = "";
                 $state.go($state.current, {}, {reload: true});//second parameter is for $stateParams
-                alert('Form submitted successfully! Thanks Abby!');
+                alert('Form submitted successfully!');
             },
             function(data, status){
                 console.log(status, data);

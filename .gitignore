@@ -78,6 +78,4 @@ bower_components/
 
 config/secret.json
 tree.md
-test*
-*test.*
-elasticsearch/
+uploaded/

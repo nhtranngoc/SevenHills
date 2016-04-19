@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="sevenHillsApp">
     <head>
-        <meta charset="UTF-8"/>
+        <meta charset="utf-8"/>
         <title>
             Seven Hills
         </title>
-        <link rel="stylesheet" href="res/css/stylesheet.css" />
-        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
-        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" media="screen" href="bower_components/bootstrap-select/dist/css/bootstrap-select.min.css"/>
-        <link rel="stylesheet" href="bower_components/ui-select/dist/select.min.css">
-        <link rel="stylesheet" href="res/css/stylesheet.css"/>
+        <link href="res/css/stylesheet.css" rel="stylesheet"/>
+        <link href="bower_components/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+        <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="bower_components/bootstrap-select/dist/css/bootstrap-select.min.css" media="screen" rel="stylesheet" type="text/css"/>
+        <link href="bower_components/ui-select/dist/select.min.css" rel="stylesheet"/>
+        <!-- CSS adjustments for browsers with JavaScript disabled -->
         <script src="bower_components/jquery/dist/jquery.min.js">
         </script>
         <script src="bower_components/bootstrap/dist/js/bootstrap.min.js">
@@ -25,9 +25,16 @@
         </script>
         <script src="bower_components/angular-breadcrumb/dist/angular-breadcrumb.min.js">
         </script>
-        <script src="bower_components/ui-select/dist/select.min.js"></script>
-        <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-        <script src="bower_components/angular-messages/angular-messages.min.js"></script>
+        <script src="bower_components/ui-select/dist/select.min.js">
+        </script>
+        <script src="bower_components/angular-sanitize/angular-sanitize.min.js">
+        </script>
+        <script src="bower_components/angular-messages/angular-messages.min.js">
+        </script>
+        <script src="bower_components/ng-file-upload/ng-file-upload.min.js">
+        </script>
+        <script src="bower_components/ng-file-upload/ng-file-upload-shim.min.js">
+        </script>
         <script src="app.js">
         </script>
         <script src="controllers/mainController.js">
@@ -41,47 +48,48 @@
         <script src="controllers/solutionController.js">
         </script>
     </head>
-    <body>
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class=container>
-                <div class=navbar-header>
-                    <button type=button class=navbar-toggle data-toggle=collapse data-target=#navbar-ex-collapse>
-                        <span class=sr-only>
-                            Toggle navigation
-                        </span>
-                        <span class=icon-bar>
-                        </span>
-                        <span class=icon-bar>
-                        </span>
-                        <span class=icon-bar>
-                        </span>
-                    </button>
-                    <a class=navbar-brand href=#>
-                        <span>
-                            Seven Hills Foundation
-                        </span>
-                    </a>
-                </div>
-                <div class="collapse navbar-collapse" id=navbar-ex-collapse>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class=active>
-                            <a ui-sref="home">
-                                Home
-                            </a>
-                        </li>
-                        <li>
-                            <a href=#>
-                                Contacts
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <div ncy-breadcrumb></div>
-        <main>
-            <div ui-view>
-            </div>
-        </main>
-    </body>
 </html>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle" data-target="#navbar-ex-collapse" data-toggle="collapse" type="button">
+                    <span class="sr-only">
+                        Toggle navigation
+                    </span>
+                    <span class="icon-bar">
+                    </span>
+                    <span class="icon-bar">
+                    </span>
+                    <span class="icon-bar">
+                    </span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <span>
+                        Seven Hills Foundation
+                    </span>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active">
+                        <a ui-sref="home">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Contacts
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div ncy-breadcrumb="">
+    </div>
+    <main>
+        <div ui-view="">
+        </div>
+    </main>
+</body>

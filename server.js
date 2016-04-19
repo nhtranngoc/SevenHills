@@ -10,6 +10,8 @@ var mysql = require('mysql');
 var async = require('async');
 var primaryRoutes = require('./routes/main.js');
 var secretFile = ('./config/secret.json');
+var app = express();
+
 //====================================================
 var config;
 try {
@@ -110,7 +112,7 @@ app.post('/submit', function(req, res) {
         };
         async.waterfall([
             function countSolutions(callback) {
-                connection.query('SELECT COUNT(*) as count from Solutions', function(err, rows, fields) {
+                connection.query('SELECT MAX(solutionid) as count from Solutions', function(err, rows, fields) {
                     solutionID = parseInt(rows[0].count) + 1;
                     solution.SolutionID = solutionID;
                     console.log("Counted " + solutionID + " solutions");
@@ -147,7 +149,7 @@ app.post('/submit', function(req, res) {
                 callback(null, solutionID);
             },
             function countMaterials(solutionID, callback) {
-                connection.query('SELECT COUNT(*) as count from Material', function(err, rows, fields) {
+                connection.query('SELECT MAX(materialid) as count from Material', function(err, rows, fields) {
                     var currentMatCount = rows[0].count;
                     callback(err, currentMatCount, solutionID);
                 })
