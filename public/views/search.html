@@ -81,7 +81,7 @@
         <ul class="media-list text-left">
             <li class="media panel panel-default" ng-repeat="result in results">
                 <a class="pull-left" href="">
-                    <img height="64" width="64" class="media-object" src=""/>
+                    <img height="64" width="64" class="media-object" ng-src="../uploaded/files/{{result.solutionid}}/0" err-src="../res/img/err.png" />
                 </a>
                 <div class="media-body">
                     <a class="media-heading panel panel-title" ui-sref="solution({solutionID:result.solutionid})" href="#/solution/{result.solutionid}">

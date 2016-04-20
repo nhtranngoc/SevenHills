@@ -55,7 +55,7 @@ router.get('/materials', function(req, res) {
 });
 router.post('/solutionid', function(req, res) {
     console.log(req.body);
-    connection.query('SELECT * from Solutions WHERE solutionID = ?', req.body.solutionID, function(err, rows, fields) {
+    connection.query('SELECT * from solutions WHERE solutionID = ?', req.body.solutionID, function(err, rows, fields) {
         console.log(rows);
         res.send(rows);
     })
@@ -79,7 +79,8 @@ router.post('/submit', function(req, res) {
     };
     async.waterfall([
         function countSolutions(callback) {
-            connection.query('SELECT MAX(solutionid) as count from Solutions', function(err, rows, fields) {
+            connection.query('SELECT MAX(solutionid) as count from solutions', function(err, rows, fields) {
+            	console.log(rows);
                 solutionID = parseInt(rows[0].count) + 1;
                 solution.SolutionID = solutionID;
                 console.log("Counted " + solutionID + " solutions");
@@ -87,7 +88,7 @@ router.post('/submit', function(req, res) {
             })
         },
         function insertSolution(solutionID, callback) {
-            connection.query('INSERT INTO Solutions SET ?', solution, function(err, res) {
+            connection.query('INSERT INTO solutions SET ?', solution, function(err, res) {
                 console.log("Inserted " + solution.SolutionName + " into set");
                 callback(err, solutionID);
             })
@@ -116,7 +117,7 @@ router.post('/submit', function(req, res) {
             callback(null, solutionID);
         },
         function countMaterials(solutionID, callback) {
-            connection.query('SELECT MAX(materialid) as count from Material', function(err, rows, fields) {
+            connection.query('SELECT MAX(materialid) as count from material', function(err, rows, fields) {
                 var currentMatCount = rows[0].count;
                 callback(err, currentMatCount, solutionID);
             })
@@ -125,7 +126,7 @@ router.post('/submit', function(req, res) {
             async.each(formSubmit.Materials, function(element, callback) {
                 console.log("Processing material: " + element.select.MaterialName);
                 //Check if material exists
-                connection.query('SELECT * from Material WHERE MaterialName = ?', element.select.MaterialName, function(err, rows, fields) {
+                connection.query('SELECT * from material WHERE MaterialName = ?', element.select.MaterialName, function(err, rows, fields) {
                     var ifExist = rows.length;
                     var currentRow = rows[0];
                     console.log("material = element: ");
@@ -153,14 +154,15 @@ router.post('/submit', function(req, res) {
                     })
                 })
             })
+            callback(null, solutionID);
         }
     ], function(err, result) {
         //Result should be solutionid?
         if (err) throw err;
-        res.send(result);
+        res.send({solutionid: result});
         console.log(err, result);
     });
-    res.send("5");
+    // res.send("5");
     console.log(formSubmit);
     console.log('=========================');
 })

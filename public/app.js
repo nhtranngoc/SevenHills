@@ -1,4 +1,4 @@
-angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-angular-breadcrumb', 'ui.select', 'ngFileUpload'])
+angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-angular-breadcrumb', 'ui.select', 'ngFileUpload', 'ui.bootstrap'])
   .config(function($breadcrumbProvider) {
     $breadcrumbProvider.setOptions({
       prefixStateName: 'home'
@@ -70,8 +70,20 @@ angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-a
             function(data){
               return data.data;
             })
-        }
         },
+        imageResolve: function($http, $stateParams) {
+          return $http.post('/imagearr', {solutionID: parseInt($stateParams.solutionID)}).then(
+            function(data){
+              var urlArr = data.data.map(function(element) {
+                var newURL = "";
+                newURL = "../uploaded/files/" + $stateParams.solutionID + "/" + element;
+                return newURL;
+              })
+              return urlArr;
+            }, function(data, status){
+              return ["../res/img/err.png"];
+            })
+        }},
       ncyBreadcrumb:{
         label: 'Solution'
       }
