@@ -12,6 +12,15 @@ angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-a
       url: "/",
       templateUrl: 'views/main.html',
       controller: 'mainController',
+      resolve: {
+        sotdResolve: 
+          function($http){
+            return $http.get('/sotd').then(
+              function(data){
+                return parseInt(data.data.solutionid);
+              })
+          }
+      },
       ncyBreadcrumb:{
         label: 'Home'
       }

@@ -30,10 +30,12 @@ connection.connect(function(err) {
     console.log('Connection established to ' + config.database);
 });
 //CRON JOB ===========================================
+var sotd;
 function getRandomSolution() {
     connection.query("SELECT * FROM solutions WHERE solutionid >= (SELECT FLOOR( MAX(solutionid) * RAND()) FROM solutions ) ORDER BY solutionid LIMIT 1", function(err, rows, fields) {
         if (err) throw err;
         console.log("Remind Mike never to work at IT.");
+        sotd = rows[0];
     })
 }
 getRandomSolution();
@@ -43,7 +45,7 @@ var everyTwoSec = '*/2 * * * * *';
 var everyDayAtMidnight = '0 0 * * * *';
 var sotdJob = new CronJob({
     cronTime: everyDayAtMidnight,
-    onTick: getRandomSolution(),
+    onTick: getRandomSolution,
     start: false,
     timeZone: 'America/Los_Angeles'
 });
@@ -68,6 +70,9 @@ router.get('/index', function(req, res) {
         console.log("Total number of results: " + rows.length);
         res.send(rows);
     })
+})
+router.get('/sotd', function(req, res){
+    res.send(sotd);
 })
 router.get('/tags', function(req, res) {
     connection.query('SELECT * from tags', function(err, rows, fields) {

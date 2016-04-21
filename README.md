@@ -50,6 +50,7 @@ Create a file called `secrets.json` using your favorite text editor. The secrets
         "database": "$databaseName"
     }
 
+"local" could be replaced with any name you choose, and can then be used by running the server with `-d` flag. Check __Server Parameter__ section for more details.
 
 Replace `$variables` with your own configurations and you're good to go!
 
