@@ -243,12 +243,10 @@
                     </label>
                 </div>
                 <div class="col-sm-2">
-                    <div class="btn btn-success fileinput-button" multiple="multiple" ngf-max-files="5" ng-model="$files" ngf-multiple="true" ngf-select="">
+                    <div class="btn btn-success fileinput-button" multiple="multiple" ngf-max-files="5" ng-model="$files" ngf-multiple="true" ngf-select="" ngf-keep="true">
                         Add images
                     </div>
-                    <!-- <div class="btn btn-success fileinput-button" multiple="multiple" ng-model="$files " ngf-max-files="5" ngf-select="uploadFiles($files)">
-                        Upload
-                    </div> -->
+                    <div class="btn btn-warning" ng-click="test()">test</div>
                 </div>
                 <div class="col-sm-8">
                     <div class="progress">
@@ -261,7 +259,7 @@
                 <div class="col-sm-offset-2 col-sm-10">
                     <div ng-repeat="file in $files track by $index">
                         <div class="col-sm-6 col-md-2">
-                            <img class="thumb" ngf-thumbnail="file">
+                            <img class="thumb" ngf-thumbnail="file" ngf-resize="{width:100, height:100, quality:0.3}">
                             </img>
                             <a class="btn btn-xs btn-link pull-right rmv" ng-click="clearThumbnail($index)">
                                 <i class="glyphicon glyphicon-remove">

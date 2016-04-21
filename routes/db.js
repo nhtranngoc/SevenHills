@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var async = require('async');
+var CronJob = require('cron').CronJob;
 var secretFile = ('../config/secret.json');
 var config;
 // CONNECT TO DATABASE =============================================================
@@ -20,6 +21,25 @@ connection.connect(function(err) {
     }
     console.log('Connection established to ' + config.database);
 });
+//CRON JOB ===========================================
+function getRandomSolution() {
+    connection.query("SELECT * FROM solutions WHERE solutionid >= (SELECT FLOOR( MAX(solutionid) * RAND()) FROM solutions ) ORDER BY solutionid LIMIT 1", function(err, rows, fields) {
+        if (err) throw err;
+        console.log("Remind Mike never to work at IT.");
+    })
+}
+getRandomSolution();
+//for messing around
+var everyTwoSec = '*/2 * * * * *';
+//for production
+var everyDayAtMidnight = '0 0 * * * *';
+var sotdJob = new CronJob({
+    cronTime: everyDayAtMidnight,
+    onTick: getRandomSolution(),
+    start: false,
+    timeZone: 'America/Los_Angeles'
+});
+sotdJob.start();
 // DATABASE QUERY ===================================================================
 //Super hacky substring search engine.
 router.get('/index', function(req, res) {
@@ -68,9 +88,9 @@ router.post('/matid', function(req, res) {
     })
 })
 router.post('/comment', function(req, res) {
-    if(req.body.get == true) {
+    if (req.body.get == true) {
         //If getting comments
-        connection.query('SELECT * from comments WHERE solutionID = ?', req.body.solutionID, function(err, rows, fields){
+        connection.query('SELECT * from comments WHERE solutionID = ?', req.body.solutionID, function(err, rows, fields) {
             if (err) throw err;
             res.send(rows);
         })
@@ -81,7 +101,7 @@ router.post('/comment', function(req, res) {
             name: req.body.name,
             commenttext: req.body.commentText
         };
-        connection.query('INSERT INTO comments SET ?', theComment, function(err, res){
+        connection.query('INSERT INTO comments SET ?', theComment, function(err, res) {
             if (err) throw err;
         })
         res.sendStatus(200);
@@ -100,7 +120,7 @@ router.post('/submit', function(req, res) {
     async.waterfall([
         function countSolutions(callback) {
             connection.query('SELECT MAX(solutionid) as count from solutions', function(err, rows, fields) {
-            	console.log(rows);
+                console.log(rows);
                 solutionID = parseInt(rows[0].count) + 1;
                 solution.SolutionID = solutionID;
                 console.log("Counted " + solutionID + " solutions");
@@ -179,12 +199,13 @@ router.post('/submit', function(req, res) {
     ], function(err, result) {
         //Result should be solutionid?
         if (err) throw err;
-        res.send({solutionid: result});
+        res.send({
+            solutionid: result
+        });
         console.log(err, result);
     });
     // res.send("5");
     console.log(formSubmit);
     console.log('=========================');
 })
-
 module.exports = router;

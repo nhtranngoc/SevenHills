@@ -16,6 +16,9 @@ angular.module('sevenHillsApp')
     $scope.matTable = materialResolve;
     
     $scope.submitComment = function(){
+        if (($scope.cmtName == null) || ($scope.cmtName == "")) {
+            $scope.cmtName = "Anonymous"
+        }
         $http.post('/comment',{
             solutionID: parseInt($stateParams.solutionID),
             get: false,
@@ -27,8 +30,8 @@ angular.module('sevenHillsApp')
             var curData = angular.copy($scope.cmtData);
             $scope.comments.push({name:curName,commenttext:curData});
             console.log($scope.addCmtForm);
-            $scope.addCmtForm.$setPristine();
-        console.log($scope.formItems);
+            $scope.cmtName = "";
+            $scope.cmtData = null;
           }, function(data, status){
             console.log(status, data);
           })

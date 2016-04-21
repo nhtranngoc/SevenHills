@@ -92,6 +92,13 @@ angular.module('sevenHillsApp').controller('addController', function($scope, $ht
             $scope.category.splice(index, 1);
         }
     }
+    $scope.test = function(){
+        console.log($scope.$files);
+        console.log($scope.$files[0].type);
+        // var blob = Upload.dataUrltoBlob('../res/img/err.png');
+        // $scope.$files.push(blob);
+        // console.log($scope.$files);
+    }
     $scope.clearThumbnail = function(index) {
             $scope.$files.splice(index, 1);
         }
