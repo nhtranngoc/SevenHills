@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var favicon = require('serve-favicon');
 var primaryRoutes = require('./routes/main.js');
 var dbRoutes = require('./routes/db.js');
+var argv = require('minimist')(process.argv.slice(2));
 var uploadRoutes = require('./routes/upload.js');
 var app = express();
 
@@ -35,7 +36,11 @@ app.use('/', dbRoutes);
 app.use('/', uploadRoutes);
 
 //DEPLOYMENT =========================================
+//Default port 80
 var port = process.env.PORT || 80;
+if (argv.p != null){
+	var port = process.env.PORT || argv.p;
+}
 app.listen(port, function() {
     console.log('App is listening on port ' + port);
 });

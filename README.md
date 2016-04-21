@@ -13,6 +13,13 @@ This is a web application for Seven Hills foundation's IQP project on developing
     4. Install bower dependencies: cd public && bower install
     5. Run from main directory: npm start or node server.js
 
+### Server parameters:
+
+There are currently two parameters to be passed on to the server:
+    
+    -p: Port, defaults to 80
+    -d: Database key in secret.json, defaults to 'local'
+
 #### Structure
 
     * Basic Node app structure

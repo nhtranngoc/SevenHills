@@ -3,11 +3,19 @@ var router = express.Router();
 var mysql = require('mysql');
 var async = require('async');
 var CronJob = require('cron').CronJob;
+var argv = require('minimist')(process.argv.slice(2));
 var secretFile = ('../config/secret.json');
 var config;
 // CONNECT TO DATABASE =============================================================
 try {
-    config = require(secretFile).local;
+    //Defaults to localhost as database host
+    if (argv.d != null) {
+        config = require(secretFile).argv.d;
+        console.log("Using database at" + argv.d);
+    } else {
+        config = require(secretFile).local;
+        console.log("Using database at localhost (Default)");
+    }
 } catch (err) {
     config = {};
     console.log("unable to read file '" + secretFile + "': ", err);
