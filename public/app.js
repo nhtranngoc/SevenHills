@@ -25,14 +25,6 @@ angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-a
         label: 'Home'
       }
     })
-    .state('random', {
-      url: '/random',
-      templateUrl: 'views/random.html',
-      controller: 'randomController',
-      ncyBreadcrumb:{
-        label: 'Random'
-      }
-    })
     .state('search', {
       url: '/index?search',
       templateUrl: 'views/search.html',

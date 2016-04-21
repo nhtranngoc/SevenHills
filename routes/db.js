@@ -53,7 +53,7 @@ sotdJob.start();
 // DATABASE QUERY ===================================================================
 //Super hacky substring search engine.
 router.get('/index', function(req, res) {
-    console.log(req.query.search);
+    console.log("Searching for " + req.query.search);
     var searchArr = req.query.search.split(" ");
     queryStr = 'SELECT * from solutions NATURAL JOIN solutiontags WHERE ';
     var queryArr = [];
@@ -63,44 +63,44 @@ router.get('/index', function(req, res) {
         queryArr.push("TagName LIKE '%" + element + "%'");
     })
     queryStr += queryArr.join(" OR ") + " Group by solutionid";
-    console.log("FINALIZED QUERY STRING: " + queryStr);
     connection.query(queryStr, function(err, rows, fields) {
         if (err) throw err;
-        console.log(rows);
         console.log("Total number of results: " + rows.length);
         res.send(rows);
     })
 })
 router.get('/sotd', function(req, res){
+    // console.log("Requesting solution of the day!");
     res.send(sotd);
 })
 router.get('/tags', function(req, res) {
+    console.log("Requesting tags");
     connection.query('SELECT * from tags', function(err, rows, fields) {
         if (err) throw err;
         res.send(rows);
     })
 });
 router.get('/materials', function(req, res) {
+    console.log("Requesting list of materials");
     connection.query('SELECT * from material', function(err, rows, fields) {
         if (err) throw err;
         res.send(rows);
     })
 });
 router.post('/solutionid', function(req, res) {
-    console.log(req.body);
+    console.log("Requesting solution number " + req.body.solutionID);
     connection.query('SELECT * from solutions WHERE solutionID = ?', req.body.solutionID, function(err, rows, fields) {
-        console.log(rows);
         res.send(rows);
     })
 })
 router.post('/matid', function(req, res) {
-    console.log(req.body);
+    console.log("Requesting materials for solution number " + req.body.matid);
     connection.query('SELECT materialname, vendor, amount from material NATURAL JOIN requirement where solutionid = ?', req.body.matid, function(err, rows, fileds) {
-        console.log(rows);
         res.send(rows);
     })
 })
 router.post('/comment', function(req, res) {
+    console.log("Requesting comments for solution number " + req.body.solutionID);
     if (req.body.get == true) {
         //If getting comments
         connection.query('SELECT * from comments WHERE solutionID = ?', req.body.solutionID, function(err, rows, fields) {
@@ -122,6 +122,7 @@ router.post('/comment', function(req, res) {
 })
 router.post('/submit', function(req, res) {
     var formSubmit = req.body;
+    console.log("Submitting form for solution: " + formSubmit.Name);
     var solution = {
         SolutionName: formSubmit.Name,
         Description: formSubmit.Description,
@@ -133,7 +134,6 @@ router.post('/submit', function(req, res) {
     async.waterfall([
         function countSolutions(callback) {
             connection.query('SELECT MAX(solutionid) as count from solutions', function(err, rows, fields) {
-                console.log(rows);
                 solutionID = parseInt(rows[0].count) + 1;
                 solution.SolutionID = solutionID;
                 console.log("Counted " + solutionID + " solutions");
@@ -183,7 +183,6 @@ router.post('/submit', function(req, res) {
                     var ifExist = rows.length;
                     var currentRow = rows[0];
                     console.log("material = element: ");
-                    console.log(rows)
                     var matToInsert = {}
                     if (ifExist == 0) {
                         currentMatCount++;
@@ -196,7 +195,7 @@ router.post('/submit', function(req, res) {
                     } else {
                         matToInsert.MaterialID = currentRow.materialid;
                     }
-                    console.log("Material ID This is important: " + matToInsert.MaterialID);
+                    console.log("Material ID: " + matToInsert.MaterialID);
                     var requirement = {
                         SolutionID: solutionID,
                         MaterialID: matToInsert.MaterialID,
@@ -215,10 +214,10 @@ router.post('/submit', function(req, res) {
         res.send({
             solutionid: result
         });
-        console.log(err, result);
+        console.log("Inserted solution number " + result);
     });
     // res.send("5");
     console.log(formSubmit);
-    console.log('=========================');
+    console.log('========FORM SUBMITTED=========');
 })
 module.exports = router;

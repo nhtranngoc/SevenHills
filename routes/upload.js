@@ -18,17 +18,12 @@ var multipartyMiddleware = multiparty(multipartyConfig);
 
 // UPLOAD ROUTE =========================================================================
 router.post('/imagearr', function(req, res){
-	console.log(req.body);
+	console.log("Requesting images for solution " + req.body.solutionID);
 	var newFolderPath = path.join(filePath, req.body.solutionID.toString());
 	fs.readdir(newFolderPath, function(err, files){
 		if (err) {
             res.sendStatus(404);
         }
-		// files.forEach(function (element, index, array) {
-		// 	element = path.join("../", newFolderPath, element);
-		// 	console.log(element);
-		// })
-		console.log(files);
 		res.send(files);
 	})
 })
@@ -36,6 +31,7 @@ router.post('/imagearr', function(req, res){
 router.post('/upload', multipartyMiddleware, function(req, res) {
     var files = req.files.files;
     var id = parseInt(req.body.id.solutionid);
+    console.log("Sending image for solution " + id);
     var newFolderPath = path.join(filePath, id.toString());
     async.series({
         mkdir: function(callback) {
