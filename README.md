@@ -18,7 +18,9 @@ This is a web application for Seven Hills foundation's IQP project on developing
 There are currently two parameters to be passed on to the server:
     
     -p: Port, defaults to 80
-    -d: Database key in secret.json, defaults to 'local'
+    -b: Database key in secret.json, defaults to 'local'
+
+`-d` is already taken by Nodemon, so I have opted not to use it.
 
 #### Structure
 

@@ -9,9 +9,9 @@ var config;
 // CONNECT TO DATABASE =============================================================
 try {
     //Defaults to localhost as database host
-    if (argv.d != null) {
-        config = require(secretFile).argv.d;
-        console.log("Using database at" + argv.d);
+    if (argv.b != null) {
+        config = require(secretFile)[argv.b];
+        console.log("Using database at " + argv.b);
     } else {
         config = require(secretFile).local;
         console.log("Using database at localhost (Default)");

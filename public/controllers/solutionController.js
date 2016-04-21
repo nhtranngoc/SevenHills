@@ -10,6 +10,7 @@ angular.module('sevenHillsApp')
 })
 .controller('solutionController', function($scope, $stateParams, $http, solutionResolve, materialResolve, imageResolve, commentResolve) {
     $scope.solution = solutionResolve[0];
+    console.log($scope.solution);
     $scope.comments = commentResolve;
     $scope.images = imageResolve;
     jQuery('.rating').rating('rate', parseInt($scope.solution.Difficulty));
