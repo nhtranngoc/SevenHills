@@ -10,6 +10,10 @@ body {
 	right: 10px;
 }
 
+.instruction {
+  white-space: pre-wrap;
+}
+
 .thumb {
     max-width: 100px;
     float: none;
@@ -30,4 +34,12 @@ img{
   left:50%;
   top:20px;
  margin-left:-200px;
+}
+
+// Block level inputs
+.input-block-level {
+  display: block;
+  width: 100%;
+  min-height: 28px;        // Make inputs at least the height of their button counterpart
+  .box-sizing(border-box); // Makes inputs behave like true block-level elements
 }

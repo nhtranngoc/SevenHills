@@ -2,4 +2,8 @@ angular.module('sevenHillsApp').controller('mainController', function($scope, $h
     $scope.submitSearch = function() {
         $state.go('search', {search:$scope.search});
     }
+    //Solution of the day
+    $scope.sotd = function() {
+    	
+    }
 })

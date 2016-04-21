@@ -83,7 +83,20 @@ angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-a
             }, function(data, status){
               return ["../res/img/err.png"];
             })
-        }},
+        }
+        ,
+        commentResolve: function($http, $stateParams) {
+          return $http.post('/comment', {
+            solutionID: parseInt($stateParams.solutionID),
+            get: true,
+            name: "aasdfla",
+            commentText: "This is a bad comment"
+          }).then(
+          function(data){
+            return data.data;
+          })
+        }
+      },
       ncyBreadcrumb:{
         label: 'Solution'
       }

@@ -67,6 +67,26 @@ router.post('/matid', function(req, res) {
         res.send(rows);
     })
 })
+router.post('/comment', function(req, res) {
+    if(req.body.get == true) {
+        //If getting comments
+        connection.query('SELECT * from comments WHERE solutionID = ?', req.body.solutionID, function(err, rows, fields){
+            if (err) throw err;
+            res.send(rows);
+        })
+    } else {
+        //If posting comments
+        var theComment = {
+            solutionid: req.body.solutionID,
+            name: req.body.name,
+            commenttext: req.body.commentText
+        };
+        connection.query('INSERT INTO comments SET ?', theComment, function(err, res){
+            if (err) throw err;
+        })
+        res.sendStatus(200);
+    }
+})
 router.post('/submit', function(req, res) {
     var formSubmit = req.body;
     var solution = {

@@ -8,11 +8,30 @@ angular.module('sevenHillsApp')
         });
     };
 })
-.controller('solutionController', function($scope, $stateParams, $http, solutionResolve, materialResolve, imageResolve) {
+.controller('solutionController', function($scope, $stateParams, $http, solutionResolve, materialResolve, imageResolve, commentResolve) {
     $scope.solution = solutionResolve[0];
-    console.log(imageResolve);
+    $scope.comments = commentResolve;
     $scope.images = imageResolve;
     jQuery('.rating').rating('rate', parseInt($scope.solution.Difficulty));
     $scope.matTable = materialResolve;
-    // console.log(materialResolve);
+    
+    $scope.submitComment = function(){
+        $http.post('/comment',{
+            solutionID: parseInt($stateParams.solutionID),
+            get: false,
+            name: $scope.cmtName,
+            commentText: $scope.cmtData
+          }).then(
+          function(data){
+            var curName = angular.copy($scope.cmtName);
+            var curData = angular.copy($scope.cmtData);
+            $scope.comments.push({name:curName,commenttext:curData});
+            console.log($scope.addCmtForm);
+            $scope.addCmtForm.$setPristine();
+        console.log($scope.formItems);
+          }, function(data, status){
+            console.log(status, data);
+          })
+    }
+
 })
