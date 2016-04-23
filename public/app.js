@@ -15,7 +15,7 @@ angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-a
       resolve: {
         sotdResolve: 
           function($http){
-            return $http.get('/sotd').then(
+            return $http.get('/api/sotd').then(
               function(data){
                 return parseInt(data.data.solutionid);
               })
@@ -23,6 +23,14 @@ angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-a
       },
       ncyBreadcrumb:{
         label: 'Home'
+      }
+    })
+    .state('404', {
+      url: "/pagenotfound",
+      templateUrl: 'views/404.html',
+      controller: '404Controller',
+      ncyBreadcrumb:{
+        label: 'Page Not Found'
       }
     })
     .state('search', {
@@ -61,19 +69,13 @@ angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-a
       controller: 'solutionController',
       resolve: {
         solutionResolve: function($http, $stateParams) {
-          return $http.post('/solutionid', {solutionID: parseInt($stateParams.solutionID)}).then(
-            function(data){
-              return data.data;
-            })
-        },
-        materialResolve: function($http, $stateParams) {
-          return $http.post('/matid', {matid: parseInt($stateParams.solutionID)}).then(
+          return $http.post('/api/solution', {solutionID: parseInt($stateParams.solutionID)}).then(
             function(data){
               return data.data;
             })
         },
         imageResolve: function($http, $stateParams) {
-          return $http.post('/imagearr', {solutionID: parseInt($stateParams.solutionID)}).then(
+          return $http.post('/api/image', {solutionID: parseInt($stateParams.solutionID)}).then(
             function(data){
               var urlArr = data.data.map(function(element) {
                 var newURL = "";
@@ -87,7 +89,7 @@ angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-a
         }
         ,
         commentResolve: function($http, $stateParams) {
-          return $http.post('/comment', {
+          return $http.post('/api/comment', {
             solutionID: parseInt($stateParams.solutionID),
             get: true,
             name: "aasdfla",

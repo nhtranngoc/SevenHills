@@ -4,14 +4,38 @@ body {
     /*color: #666666;*/
 }
 
+body {
+    /*background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMC8yOS8xMiKqq3kAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzVxteM2AAABHklEQVRIib2Vyw6EIAxFW5idr///Qx9sfG3pLEyJ3tAwi5EmBqRo7vHawiEEERHS6x7MTMxMVv6+z3tPMUYSkfTM/R0fEaG2bbMv+Gc4nZzn+dN4HAcREa3r+hi3bcuu68jLskhVIlW073tWaYlQ9+F9IpqmSfq+fwskhdO/AwmUTJXrOuaRQNeRkOd5lq7rXmS5InmERKoER/QMvUAPlZDHcZRhGN4CSeGY+aHMqgcks5RrHv/eeh455x5KrMq2yHQdibDO6ncG/KZWL7M8xDyS1/MIO0NJqdULLS81X6/X6aR0nqBSJcPeZnlZrzN477NKURn2Nus8sjzmEII0TfMiyxUuxphVWjpJkbx0btUnshRihVv70Bv8ItXq6Asoi/ZiCbU6YgAAAABJRU5ErkJggg==);*/
+    background-image: url('../img/bg.png');
+}
+
+#logo {
+    max-width: 100px;
+    margin-top: -7px;
+}
+
+.error-template {
+    padding: 40px 15px;
+    text-align: center;
+}
+
+.error-actions {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.error-actions .btn {
+    margin-right: 10px;
+}
+
 .rmv {
-	position: absolute;
-	top: 10px;
-	right: 10px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 
 .instruction {
-  white-space: pre-wrap;
+    white-space: pre-wrap;
 }
 
 .thumb {
@@ -21,25 +45,27 @@ body {
     top: 7px;
 }
 
-#slides_control > div{
-  height: 200px;
+#slides_control > div {
+    height: 200px;
 }
-img{
-  margin:auto;
-  max-width: 100%;
+
+img {
+    margin: auto;
+    max-width: 100%;
 }
+
 #slides_control {
-  position:absolute;
-  width: 400px;
-  left:50%;
-  top:20px;
- margin-left:-200px;
+    position: absolute;
+    width: 400px;
+    left: 50%;
+    top: 20px;
+    margin-left: -200px;
 }
 
 // Block level inputs
 .input-block-level {
-  display: block;
-  width: 100%;
-  min-height: 28px;        // Make inputs at least the height of their button counterpart
-  .box-sizing(border-box); // Makes inputs behave like true block-level elements
+    display: block;
+    width: 100%;
+    min-height: 28px; // Make inputs at least the height of their button counterpart
+    .box-sizing(border-box); // Makes inputs behave like true block-level elements
 }

@@ -17,7 +17,7 @@ try {
 var multipartyMiddleware = multiparty(multipartyConfig);
 
 // UPLOAD ROUTE =========================================================================
-router.post('/imagearr', function(req, res){
+router.post('/api/image', function(req, res){
 	console.log("Requesting images for solution " + req.body.solutionID);
 	var newFolderPath = path.join(filePath, req.body.solutionID.toString());
 	fs.readdir(newFolderPath, function(err, files){

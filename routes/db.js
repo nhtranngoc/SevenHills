@@ -31,6 +31,7 @@ connection.connect(function(err) {
 });
 //CRON JOB ===========================================
 var sotd;
+
 function getRandomSolution() {
     connection.query("SELECT * FROM solutions WHERE solutionid >= (SELECT FLOOR( MAX(solutionid) * RAND()) FROM solutions ) ORDER BY solutionid LIMIT 1", function(err, rows, fields) {
         if (err) throw err;
@@ -69,37 +70,45 @@ router.get('/index', function(req, res) {
         res.send(rows);
     })
 })
-router.get('/sotd', function(req, res){
+router.get('/api/sotd', function(req, res) {
     // console.log("Requesting solution of the day!");
     res.send(sotd);
 })
-router.get('/tags', function(req, res) {
+router.get('/api/tags', function(req, res) {
     console.log("Requesting tags");
     connection.query('SELECT * from tags', function(err, rows, fields) {
         if (err) throw err;
         res.send(rows);
     })
 });
-router.get('/materials', function(req, res) {
+router.get('/api/materials', function(req, res) {
     console.log("Requesting list of materials");
     connection.query('SELECT * from material', function(err, rows, fields) {
         if (err) throw err;
         res.send(rows);
     })
 });
-router.post('/solutionid', function(req, res) {
-    console.log("Requesting solution number " + req.body.solutionID);
-    connection.query('SELECT * from solutions WHERE solutionID = ?', req.body.solutionID, function(err, rows, fields) {
-        res.send(rows);
+router.post('/api/solution', function(req, res) {
+    var solutionID = req.body.solutionID;
+    async.series([
+        function getSolutionData(callback) {
+            console.log("Requesting solution number " + solutionID);
+            connection.query('SELECT * from solutions WHERE solutionID = ?', solutionID, function(err, rows, fields) {
+                callback(err, rows);
+            })
+        },
+        function getMaterialData(callback) {
+            console.log("Requesting materials for solution number " + solutionID);
+            connection.query('SELECT materialname, vendor, amount from material NATURAL JOIN requirement where solutionid = ?', solutionID, function(err, rows, fileds) {
+                callback(err, rows);
+            })
+        }
+    ], function(err, results){
+        if (err) throw err;
+        res.send({solution: results[0], material: results[1]});
     })
 })
-router.post('/matid', function(req, res) {
-    console.log("Requesting materials for solution number " + req.body.matid);
-    connection.query('SELECT materialname, vendor, amount from material NATURAL JOIN requirement where solutionid = ?', req.body.matid, function(err, rows, fileds) {
-        res.send(rows);
-    })
-})
-router.post('/comment', function(req, res) {
+router.post('/api/comment', function(req, res) {
     console.log("Requesting comments for solution number " + req.body.solutionID);
     if (req.body.get == true) {
         //If getting comments
@@ -120,7 +129,7 @@ router.post('/comment', function(req, res) {
         res.sendStatus(200);
     }
 })
-router.post('/submit', function(req, res) {
+router.post('/api/submit', function(req, res) {
     var formSubmit = req.body;
     console.log("Submitting form for solution: " + formSubmit.Name);
     var solution = {
@@ -182,7 +191,6 @@ router.post('/submit', function(req, res) {
                 connection.query('SELECT * from material WHERE MaterialName = ?', element.select.MaterialName, function(err, rows, fields) {
                     var ifExist = rows.length;
                     var currentRow = rows[0];
-                    console.log("material = element: ");
                     var matToInsert = {}
                     if (ifExist == 0) {
                         currentMatCount++;

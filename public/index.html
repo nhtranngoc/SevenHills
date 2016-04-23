@@ -1,51 +1,52 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="sevenHillsApp">
-    <head>
-        <meta charset="utf-8"/>
-        <title>
-            Seven Hills
-        </title>
-        <link href="res/css/stylesheet.css" rel="stylesheet"/>
-        <link href="bower_components/font-awesome/css/font-awesome.css" rel="stylesheet"/>
-        <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
-        <link href="bower_components/bootstrap-select/dist/css/bootstrap-select.min.css" media="screen" rel="stylesheet" type="text/css"/>
-        <link href="bower_components/ui-select/dist/select.min.css" rel="stylesheet"/>
-            <!-- Library scripts -->
-            <script src="bower_components/jquery/dist/jquery.min.js">
-            </script>
-            <script src="bower_components/bootstrap/dist/js/bootstrap.min.js">
-            </script>
-            <script src="bower_components/bootstrap-select/dist/js/bootstrap-select.js">
-            </script>
-            <script src="bower_components/bootstrap-rating/bootstrap-rating.min.js">
-            </script>
-            <script src="bower_components/angular/angular.min.js">
-            </script>
-            <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js">
-            </script>
-            <script src="bower_components/angular-breadcrumb/dist/angular-breadcrumb.min.js">
-            </script>
-            <script src="bower_components/ui-select/dist/select.min.js">
-            </script>
-            <script src="bower_components/angular-sanitize/angular-sanitize.min.js">
-            </script>
-            <script src="bower_components/angular-messages/angular-messages.min.js">
-            </script>
-            <script src="bower_components/ng-file-upload/ng-file-upload.min.js">
-            </script>
-            <script src="bower_components/ng-file-upload/ng-file-upload-shim.min.js">
-            </script>
-            <script src="app.js">
-            </script>
-            <script src="controllers/mainController.js">
-            </script>
-            <script src="controllers/addController.js">
-            </script>
-            <script src="controllers/searchController.js">
-            </script>
-            <script src="controllers/solutionController.js">
-            </script>
-    </head>
+<head>
+    <meta charset="utf-8"/>
+    <title>
+        Seven Hills
+    </title>
+    <link href="res/css/stylesheet.css" rel="stylesheet"/>
+    <link href="bower_components/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="bower_components/bootstrap-select/dist/css/bootstrap-select.min.css" media="screen" rel="stylesheet" type="text/css"/>
+    <link href="bower_components/ui-select/dist/select.min.css" rel="stylesheet"/>
+    <!-- Library scripts -->
+    <script src="bower_components/jquery/dist/jquery.min.js">
+    </script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js">
+    </script>
+    <script src="bower_components/bootstrap-select/dist/js/bootstrap-select.js">
+    </script>
+    <script src="bower_components/bootstrap-rating/bootstrap-rating.min.js">
+    </script>
+    <script src="bower_components/angular/angular.min.js">
+    </script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js">
+    </script>
+    <script src="bower_components/angular-breadcrumb/dist/angular-breadcrumb.min.js">
+    </script>
+    <script src="bower_components/ui-select/dist/select.min.js">
+    </script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js">
+    </script>
+    <script src="bower_components/angular-messages/angular-messages.min.js">
+    </script>
+    <script src="bower_components/ng-file-upload/ng-file-upload.min.js">
+    </script>
+    <script src="bower_components/ng-file-upload/ng-file-upload-shim.min.js">
+    </script>
+    <script src="app.js">
+    </script>
+    <script src="controllers/mainController.js">
+    </script>
+    <script src="controllers/addController.js">
+    </script>
+    <script src="controllers/searchController.js">
+    </script>
+    <script src="controllers/solutionController.js">
+    </script>
+    <script src="controllers/404Controller.js"></script>
+</head>
 </html>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -62,10 +63,8 @@
                     <span class="icon-bar">
                     </span>
                 </button>
-                <a class="navbar-brand" href="#">
-                    <span>
-                        Seven Hills Foundation
-                    </span>
+                <a class="navbar-brand" rel="home" href="http://www.sevenhills.org" title="Seven Hills Foundation">
+                    <img id="logo" src="res/img/logo.png">
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-ex-collapse">
