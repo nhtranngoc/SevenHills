@@ -63,9 +63,10 @@ router.get('/index', function(req, res) {
         queryArr.push("Description LIKE '%" + element + "%'");
         queryArr.push("TagName LIKE '%" + element + "%'");
     })
-    queryStr += queryArr.join(" OR ") + " Group by solutionid";
+    queryStr += queryArr.join(" OR ") + " GROUP BY solutionid";
     connection.query(queryStr, function(err, rows, fields) {
         if (err) throw err;
+        console.log(rows);
         console.log("Total number of results: " + rows.length);
         res.send(rows);
     })
@@ -102,10 +103,16 @@ router.post('/api/solution', function(req, res) {
             connection.query('SELECT materialname, vendor, amount from material NATURAL JOIN requirement where solutionid = ?', solutionID, function(err, rows, fileds) {
                 callback(err, rows);
             })
+        },
+        function getTagData(callback) {
+            console.log("Requesting tags for solution number " + solutionID);
+            connection.query('SELECT * from solutiontags WHERE solutionid = ?', solutionID, function(err, rows, fields) {
+                callback(err, rows);
+            })
         }
     ], function(err, results){
         if (err) throw err;
-        res.send({solution: results[0], material: results[1]});
+        res.send({solution: results[0], material: results[1], tags: results[2]});
     })
 })
 router.post('/api/comment', function(req, res) {

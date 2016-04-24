@@ -59,6 +59,22 @@ angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-a
       url: '/add',
       templateUrl: 'views/add.html',
       controller: 'addController',
+      resolve: {
+        tagResolve: function($http) {
+          return $http.get('/api/tags').then(
+            function(data){
+              return data.data.map(function(item){
+                return item['TagName'];
+              });
+            })
+        },
+        materialResolve: function($http) {
+          return $http.get('/api/materials').then(
+            function(data){
+              return data.data
+            })
+        }
+      },
       ncyBreadcrumb:{
         label: 'Add Solution'
       }

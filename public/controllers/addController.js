@@ -1,22 +1,7 @@
-angular.module('sevenHillsApp').controller('addController', function($scope, $http, $state, Upload) {
-    $scope.materials = [];
-    $scope.$on('$stateChangeSuccess', function() {
-        $http.get('/tags').then(function(data) {
-            $scope.tags = data.data.map(function(item) {
-                return item['TagName'];
-            })
-            console.log($scope.tags);
-        }, function(data, status) {
-            console.log(status, data)
-        })
-        $http.get('/materials').then(function(data) {
-            console.log(data.data);
-            //data.data is an array of objects, containing material info.
-            $scope.materials = data.data;
-        }, function(data, status) {
-            console.log(status, data);
-        })
-    });
+angular.module('sevenHillsApp').controller('addController', function($scope, $http, $state, Upload, tagResolve, materialResolve) {
+    $scope.materials = materialResolve;
+    console.log(materialResolve)
+    $scope.tags = tagResolve;
     $scope.category = [];
     $scope.refreshResults = function($select) {
         var search = $select.search,
@@ -125,7 +110,7 @@ angular.module('sevenHillsApp').controller('addController', function($scope, $ht
             Cost: $scope.solCost,
             Instruction: $scope.solInst
         };
-        $http.post('/submit', formInfo)
+        $http.post('/api/submit', formInfo)
         .then(function(data) {
             console.log(data);
             if (files && files.length) {

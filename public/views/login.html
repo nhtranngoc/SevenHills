@@ -1,0 +1,12 @@
+<div class="container">
+  <div ng-show="error_message != ''" class="alert alert-danger">
+    {{ error_message }}
+  </div>
+  <form ng-submit="auth('/auth/login')" class="form">
+    <label for="usernameInput" class="sr-only">User Name</label>
+    <input ng-model="user.username" type="text" id="usernameInput" class="form-control" placeholder="User Name" required autofocus>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input ng-model="user.password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    <button class="btn btn-lg btn-primary pull-right">Log In</button>
+  </form>
+</div>

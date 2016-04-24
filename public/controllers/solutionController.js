@@ -11,15 +11,16 @@ angular.module('sevenHillsApp').directive('backImg', function() {
     $scope.matTable = solutionResolve.material;
     $scope.comments = commentResolve;
     $scope.images = imageResolve;
-    if (!$scope.solution){
+    if (!$scope.solution) {
         $state.go('404');
     }
+    console.log($scope.instruction);
     jQuery('.rating').rating('rate', parseInt($scope.solution.Difficulty));
     $scope.submitComment = function() {
         if (($scope.cmtName == null) || ($scope.cmtName == "")) {
             $scope.cmtName = "Anonymous"
         }
-        $http.post('/comment', {
+        $http.post('/api/comment', {
             solutionID: parseInt($stateParams.solutionID),
             get: false,
             name: $scope.cmtName,

@@ -11,12 +11,13 @@
         <div class="row">
             <div class="col-md-offset-3 col-md-6">
                 <form novalidate role="form" ng-submit="submitSearch()">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input class="form-control" name="search" ng-model="searchBar" type="text"/>
+                    <div class="form-group col-md-8 col-md-offset-2" id="custom-search-input">
+                        <div class="input-group" id="searchForm">
+                        <input type="text" class="form-control input-md" ng-model="searchBar"/>
                             <span class="input-group-btn">
-                                <button class="btn btn-success" type="button" ng-click="submitSearch()">
-                                    Search
+                                <button class="btn btn-primary btn-md" type="button" ui-sref="search({search:search})" ng-click="submitsearch()">
+                                    <i class="glyphicon glyphicon-search">
+                                    </i>
                                 </button>
                             </span>
                         </div>
@@ -24,45 +25,6 @@
                 </form>
             </div>
         </div>
-        <!-- <div class="row">
-            <div class="col-md-12">
-                <div class="btn-group btn-group-xs">
-                    <a class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                        <span class="fa fa-2x fa-caret-down">
-                            Filter
-                        </span>
-                        <br/>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="#">
-                                Action
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 text-left">
-                <a class="btn btn-primary">
-                    Mobility
-                </a>
-                <a class="btn btn-primary">
-                    High-tech
-                </a>
-                <a class="btn btn-primary">
-                    Low-tech
-                    <br/>
-                </a>
-                <a class="btn btn-primary">
-                    Sensitivity-touch
-                </a>
-                <a class="btn btn-primary">
-                    Firm-touch
-                </a>
-            </div>
-        </div> -->
     </div>
 </div>
 <div class="section">
