@@ -77,5 +77,6 @@ sftp-config.json
 bower_components/
 
 config/secret.json
+config/userSecret.json
 tree.md
 uploaded/

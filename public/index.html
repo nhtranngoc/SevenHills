@@ -82,10 +82,15 @@
                             <i class="glyphicon glyphicon-question-sign"></i>
                         </a>
                     </li>
-                    <li ng-show="authenticated"><a><i class="fa fa-user"></i></a></li>
+                    <li ng-show="authenticated">
+                        <a ui-sref="super">
+                            <i class="fa fa-user-times">
+                            </i>
+                        </a>
+                    </li>
                     <li ng-show="!authenticated">
                         <a ui-sref="login">
-                            <i class="fa fa-user-times">
+                            <i class="fa fa-user">
                             </i>
                         </a>
                     </li>
@@ -96,7 +101,7 @@
     <div ncy-breadcrumb="">
     </div>
     <main>
-        <h3 ng-show="authenticated">Logged in as {{ currentUser }}</h3>
+        <a ng-show="authenticated">Logged in as {{ currentUser }}</a>
         <div ui-view="">
         </div>
     </main>

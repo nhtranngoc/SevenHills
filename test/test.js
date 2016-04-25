@@ -8,15 +8,12 @@ describe('loading express', function() {
     it('responds to /', function testSlash(done) {
         server.get('/').expect(200, done);
     });
-    it('responds to /test', function testTest(done) {
-    	server.get('/test').expect(200, {test:true}).end(done);
-    });
     it('404 everything else', function testPath(done) {
         server.get('/foo/bar').expect(404, done);
     });
 });
 
-describe('sending GET requests', function() {
+describe('Testing APIs', function() {
 	it('responds to /tags', function testTags(done){
 		server.get('/tags').expect(function (res){
 			expect(res).to.be.a('Object');
@@ -29,10 +26,8 @@ describe('sending GET requests', function() {
 	});
 	it('responds to search queries', function testIndex(done){
 		server
-		  .get('/index')
-		  .send({'search':''})
-		  .expect(function(res){
-		  	expect(res).to.be.a('Object');
+		  .get('/index?search=a').expect(function(res){
+		  	expect(res.body[0]).to.be.a('Object');
 		  }).end(done);
 	})
 })

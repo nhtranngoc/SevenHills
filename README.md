@@ -56,6 +56,12 @@ Create a file called `secrets.json` using your favorite text editor. The secrets
 
 Replace `$variables` with your own configurations and you're good to go!
 
+#### Authentication
+
+Since we are only expecting a small amount of super-users, or admins, we are currently storing user information in a JSON file. Obviously this is not the best way to do it, but in this context we believe this to be our best approach. Furthermore, the password is hashed and salted before being stored, which lower our security concern.
+
+To set a new username/password, or change existing one, please run the `setSuperUser.js` file.
+
 #### Deployment
 
 (Nothing here yet)

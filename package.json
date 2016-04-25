@@ -19,9 +19,11 @@
     "express": "*",
     "file-stream-rotator": "*",
     "jasmine-node": "^1.14.5",
+    "jsonfile": "^2.3.0",
     "minimist": "^1.2.0",
     "morgan": "*",
     "mysql": "^2.10.2",
+    "prompt": "^1.0.0",
     "serve-favicon": "^2.3.0"
   },
   "devDependencies": {
