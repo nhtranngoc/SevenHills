@@ -6,10 +6,11 @@ var path = require('path');
 var fs = require('fs');
 var bodyParser = require('body-parser');
 var favicon = require('serve-favicon');
+var argv = require('minimist')(process.argv.slice(2));
 var primaryRoutes = require('./routes/main.js');
 var dbRoutes = require('./routes/db.js');
-var argv = require('minimist')(process.argv.slice(2));
 var uploadRoutes = require('./routes/upload.js');
+var authRoutes = require('./routes/authenticate.js');
 var app = express();
 
 //====================================================
@@ -34,6 +35,7 @@ app.use(bodyParser.urlencoded({
 app.use('/', primaryRoutes);
 app.use('/', dbRoutes);
 app.use('/', uploadRoutes);
+app.use('/auth', authRoutes);
 
 //DEPLOYMENT =========================================
 //Default port 80

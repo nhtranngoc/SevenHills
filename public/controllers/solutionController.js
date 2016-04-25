@@ -6,15 +6,20 @@ angular.module('sevenHillsApp').directive('backImg', function() {
             'background-size': 'cover'
         });
     };
-}).controller('solutionController', function($scope, $state, $stateParams, $http, solutionResolve, imageResolve, commentResolve) {
+})
+.controller('solutionController', function($scope, $state, $stateParams, $http, solutionResolve, imageResolve, commentResolve) {
     $scope.solution = solutionResolve.solution[0];
     $scope.matTable = solutionResolve.material;
     $scope.comments = commentResolve;
-    $scope.images = imageResolve;
+    // $scope.images = imageResolve;
+    var images = $scope.images = [];
+    imageResolve.forEach(function(element, index, array){
+        images.push({path:element});
+    })
+    console.log($scope.images);
     if (!$scope.solution) {
         $state.go('404');
     }
-    console.log($scope.instruction);
     jQuery('.rating').rating('rate', parseInt($scope.solution.Difficulty));
     $scope.submitComment = function() {
         if (($scope.cmtName == null) || ($scope.cmtName == "")) {

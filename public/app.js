@@ -1,4 +1,4 @@
-angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-angular-breadcrumb', 'ui.select', 'ngFileUpload'])
+angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-angular-breadcrumb', 'ui.select', 'ngFileUpload', 'ui.bootstrap'])
   .config(function($breadcrumbProvider) {
     $breadcrumbProvider.setOptions({
       prefixStateName: 'home'
@@ -26,11 +26,19 @@ angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-a
       }
     })
     .state('404', {
-      url: "/pagenotfound",
+      url: '/pagenotfound',
       templateUrl: 'views/404.html',
       controller: '404Controller',
-      ncyBreadcrumb:{
+      ncyBreadcrumb: {
         label: 'Page Not Found'
+      }
+    })
+    .state('login', {
+      url: '/login',
+      templateUrl: 'views/login.html',
+      controller: 'loginController',
+      ncyBreadcrumb: {
+        label: 'Login'
       }
     })
     .state('search', {

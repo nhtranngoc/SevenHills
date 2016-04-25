@@ -12,7 +12,8 @@
         <form novalidate role="form" ng-submit="submitSearch()">
             <div class="form-group col-md-8 col-md-offset-2" id="custom-search-input">
                 <div class="input-group" id="searchForm">
-                    <input type="text" class="form-control input-lg" ng-model="search" placeholder="Type search keywords here, i.e. Recreation, Communication, Daily living..."/>
+                    <label for="searchField" class="sr-only">Search</label>
+                    <input type="text" name="searchField" class="form-control input-lg" ng-model="search" placeholder="Type search keywords here, i.e. Recreation, Communication, Daily living..." autofocus/>
                     <span class="input-group-btn">
                         <button class="btn btn-primary btn-lg" type="button" ui-sref="search({search:search})" ng-click="submitsearch()">
                             <i class="glyphicon glyphicon-search">

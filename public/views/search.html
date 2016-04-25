@@ -13,7 +13,8 @@
                 <form novalidate role="form" ng-submit="submitSearch()">
                     <div class="form-group col-md-8 col-md-offset-2" id="custom-search-input">
                         <div class="input-group" id="searchForm">
-                        <input type="text" class="form-control input-md" ng-model="searchBar"/>
+                            <label for="searchField" class="sr-only">Search</label>
+                            <input type="text" autofocus name="searchField" class="form-control input-md" ng-model="searchBar"/>
                             <span class="input-group-btn">
                                 <button class="btn btn-primary btn-md" type="button" ui-sref="search({search:search})" ng-click="submitsearch()">
                                     <i class="glyphicon glyphicon-search">
@@ -30,7 +31,28 @@
 <div class="section">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8 col-md-offset-1">
+                <h3>Filter tags</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+               <ui-select multiple="" ng-model="category" on-remove="removeTag($item)" on-select="filter($item)" tagging="" tagging-label="(new)" theme="bootstrap">
+               <ui-select-match placeholder=" Select tags to filter">
+               {{$item}}
+           </ui-select-match>
+           <ui-select-choices repeat="tag in tags | filter:$select.search">
+           {{tag}}
+       </ui-select-choices>
+   </ui-select>
+</div>
+</div>
+</div>
+</div>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-1">
                 <h3 id="changeThisToo">
                     {{num}} results found for "{{searchString}}":
                 </h3>
@@ -40,21 +62,23 @@
 </div>
 <div class="section">
     <div class="container">
-        <ul class="media-list text-left">
-            <li class="media panel panel-default" ng-repeat="result in results">
-                <a class="pull-left" href="">
-                    <img height="64" width="64" class="media-object" ng-src="../uploaded/files/{{result.solutionid}}/0" err-src="../res/img/err.png" />
-                </a>
-                <div class="media-body">
-                    <a class="media-heading panel panel-title" ui-sref="solution({solutionID:result.solutionid})" href="#/solution/{result.solutionid}">
-                        {{result.SolutionName}}
+        <div class="col-md-8 col-md-offset-2">
+            <ul class="media-list text-left">
+                <li class="media panel panel-default" ng-repeat="result in results">
+                    <a class="pull-left" href="">
+                        <img height="64" width="64" class="media-object" ng-src="../uploaded/files/{{result.solutionid}}/0" err-src="../res/img/err.png" />
                     </a>
-                    <p>
-                        {{result.Description}}
-                    </p>
-                </div>
-            </li>
-        </ul>
+                    <div class="media-body">
+                        <a class="media-heading panel panel-title" ui-sref="solution({solutionID:result.solutionid})" href="#/solution/{result.solutionid}">
+                            {{result.SolutionName}}
+                        </a>
+                        <p>
+                            {{result.Description}}
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 <!-- 

@@ -9,6 +9,7 @@
     <link href="bower_components/font-awesome/css/font-awesome.css" rel="stylesheet"/>
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="bower_components/bootstrap-select/dist/css/bootstrap-select.min.css" media="screen" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
     <link href="bower_components/ui-select/dist/select.min.css" rel="stylesheet"/>
     <!-- Library scripts -->
     <script src="bower_components/jquery/dist/jquery.min.js">
@@ -35,6 +36,7 @@
     </script>
     <script src="bower_components/ng-file-upload/ng-file-upload-shim.min.js">
     </script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="app.js">
     </script>
     <script src="controllers/mainController.js">
@@ -46,6 +48,7 @@
     <script src="controllers/solutionController.js">
     </script>
     <script src="controllers/404Controller.js"></script>
+    <script src="controllers/loginController.js"></script>
 </head>
 </html>
 <body>
@@ -79,6 +82,13 @@
                             <i class="glyphicon glyphicon-question-sign"></i>
                         </a>
                     </li>
+                    <li ng-show="authenticated"><a><i class="fa fa-user"></i></a></li>
+                    <li ng-show="!authenticated">
+                        <a ui-sref="login">
+                            <i class="fa fa-user-times">
+                            </i>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -86,6 +96,7 @@
     <div ncy-breadcrumb="">
     </div>
     <main>
+        <h3 ng-show="authenticated">Logged in as {{ currentUser }}</h3>
         <div ui-view="">
         </div>
     </main>
