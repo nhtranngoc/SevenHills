@@ -3,7 +3,7 @@ angular.module('sevenHillsApp').controller('addController', function($scope, $ro
     $scope.tags = tagResolve;
     $scope.category = [];
     $scope.formItems = [];
-    if ($rootScope.edit == true) {
+    if ($rootScope.edit) {
         //Populate add form with data from $rootScope.solutionToEdit;
         var solution = $rootScope.solutionToEdit.solution[0];
         var tags = $rootScope.solutionToEdit.tags;
@@ -26,6 +26,17 @@ angular.module('sevenHillsApp').controller('addController', function($scope, $ro
         $scope.solDiff = solution.Difficulty.toString();
         $scope.solCost = solution.EstimatedTotalCost;
         $scope.solInst = solution.Instruction;
+        $http.post('/api/image', {solutionID: solution.solutionid}).then(
+            function(data){
+                console.log("Loaded image successfully");
+                var urlData = data.data.map(function(element){
+                    var newURL;
+                    newURL = "/uploaded/files/" + solution.solutionid.toString() + "/" + element;
+                    return newURL;
+                })
+                $scope.$existFiles = urlData;
+                console.log($existFiles);
+            })
     }
     $scope.refreshResults = function($select) {
         var search = $select.search,
@@ -133,30 +144,35 @@ angular.module('sevenHillsApp').controller('addController', function($scope, $ro
             Cost: $scope.solCost,
             Instruction: $scope.solInst
         };
-        $http.post('/api/submit', formInfo).then(function(data) {
-            console.log(data);
-            if (files && files.length) {
-                Upload.upload({
-                    url: '/upload',
-                    method: 'POST',
-                    data: {
-                        files: files,
-                        id: data.data
-                    }
-                }).then(function(resp) {
-                    console.log('Success' + resp.config);
-                    $state.go($state.current, {}, {
-                        reload: true
+        if (!$rootScope.edit) {
+            $http.post('/api/submit', formInfo).then(function(data) {
+                console.log(data);
+                if (files && files.length) {
+                    Upload.upload({
+                        url: '/upload',
+                        method: 'POST',
+                        data: {
+                            files: files,
+                            id: data.data
+                        }
+                    }).then(function(resp) {
+                        console.log('Success' + resp.config);
+                        $state.go($state.current, {}, {
+                            reload: true
+                        });
+                        // console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+                    }, function(resp) {
+                        console.log('Error status: ' + resp.status);
+                    }, function(evt) {
+                        $scope.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                     });
-                    // console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
-                }, function(resp) {
-                    console.log('Error status: ' + resp.status);
-                }, function(evt) {
-                    $scope.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                });
-            }
-        }, function(data, status) {
-            console.log(status, data);
-        });
+                }
+            }, function(data, status) {
+                console.log(status, data);
+            });
+        } else {
+            //If edit mode is true, update.
+
+        }
     }
 })
