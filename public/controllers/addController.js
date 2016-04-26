@@ -10,13 +10,22 @@ angular.module('sevenHillsApp').controller('addController', function($scope, $ro
         var materials = $rootScope.solutionToEdit.material;
         $scope.solName = solution.SolutionName;
         $scope.solDes = solution.Description;
-        tags.forEach(function(element, index, array){
+        tags.forEach(function(element, index, array) {
             $scope.category.push(element.TagName);
         })
-        // materials.forEach(function(element, index, array){
-        //     $scope.formItems.push({element.select.MaterialName})
-        // })
-
+        materials.forEach(function(element, index, array) {
+            $scope.formItems.push({
+                select: {
+                    MaterialName: element.materialname,
+                    Vendor: element.vendor
+                },
+                quan: element.amount
+            })
+        })
+        $scope.solTime = solution.Time;
+        $scope.solDiff = solution.Difficulty.toString();
+        $scope.solCost = solution.EstimatedTotalCost;
+        $scope.solInst = solution.Instruction;
     }
     $scope.refreshResults = function($select) {
         var search = $select.search,
@@ -124,8 +133,7 @@ angular.module('sevenHillsApp').controller('addController', function($scope, $ro
             Cost: $scope.solCost,
             Instruction: $scope.solInst
         };
-        $http.post('/api/submit', formInfo)
-        .then(function(data) {
+        $http.post('/api/submit', formInfo).then(function(data) {
             console.log(data);
             if (files && files.length) {
                 Upload.upload({
