@@ -28,9 +28,14 @@ router.post('/api/image', function(req, res){
 	})
 })
 
+router.delete('/api/image', function(req, res){
+    console.log("Request to delete image(s) ");
+})
+
 router.post('/upload', multipartyMiddleware, function(req, res) {
     var files = req.files.files;
     var id = parseInt(req.body.id.solutionid);
+    var exists = 0;
     console.log("Sending image for solution " + id);
     var newFolderPath = path.join(filePath, id.toString());
     async.series({
@@ -39,9 +44,23 @@ router.post('/upload', multipartyMiddleware, function(req, res) {
                 callback(err);
             })
         },
+        readdir: function(callback) {
+            fs.readdir(newFolderPath, function(err, files) {
+                if (files) {
+                    var largest = 0;
+                    for (i=0;i<=largest;i++){
+                        if(parseInt(files[i])>largest){
+                            largest = parseInt(files[i]);
+                        }
+                    }
+                    exists = largest;
+                }
+                callback(err);
+            })
+        },
         rename: function(callback) {
             files.forEach(function(element, index, array) {
-                var newFilePath = path.join(newFolderPath, index.toString());
+                var newFilePath = path.join(newFolderPath, (exists + index).toString());
                 fs.rename(element.path, newFilePath, function(err) {
                 	if (err) throw err;
                 })
