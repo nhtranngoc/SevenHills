@@ -30,11 +30,11 @@
                     <p class="help-block">What do you want to call this solution?</p>
                 </div> -->
             </div>
-           <!--  <div class="help-block" ng-if="addSolForm.solName.$touched" ng-messages="addSolForm.solName.$error">
-                <p class="help-block" ng-message="required">
-                    Please fill out this field.
+            <div class="help-block" ng-if="addSolForm.solName.$touched" ng-messages="addSolForm.solName.$error">
+                <p class="help-block" ng-message="maxLength">
+                    This solution name is too long.
                 </p>
-            </div> -->
+            </div>
             <div class="form-group">
                 <div class="col-sm-2">
                     <label class="control-label" for="solDes">
@@ -249,7 +249,7 @@
                     </label>
                 </div>
                 <div class="col-sm-2">
-                    <div class="btn btn-success fileinput-button" multiple="multiple" ngf-max-files="5" ng-model="$files" ngf-multiple="true" ngf-select="" ngf-keep="true">
+                    <div class="btn btn-info fileinput-button" multiple="multiple" ngf-max-files="5" ng-model="$files" ngf-multiple="true" ngf-select="" ngf-keep="true">
                         Add images
                     </div>
                 </div>
@@ -275,8 +275,8 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button class="btn btn-default" type="submit">
+                <div class="col-sm-offset-2 col-sm-10 text-center">
+                    <button class="btn btn-hg btn-primary" type="submit">
                     Submit
                     </button>
                 </div>

@@ -7,6 +7,7 @@ var fs = require('fs');
 var bodyParser = require('body-parser');
 var favicon = require('serve-favicon');
 var argv = require('minimist')(process.argv.slice(2));
+var session = require('express-session');
 var primaryRoutes = require('./routes/main.js');
 var dbRoutes = require('./routes/db.js');
 var uploadRoutes = require('./routes/upload.js');
@@ -32,6 +33,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+app.use(session({secret:'ssshh'}));
+sess = null;
 app.use('/', primaryRoutes);
 app.use('/', dbRoutes);
 app.use('/', uploadRoutes);
