@@ -7,7 +7,9 @@ angular.module('sevenHillsApp').directive('backImg', function() {
         });
     };
 })
-.controller('solutionController', function($scope, $state, $stateParams, $http, solutionResolve, imageResolve, commentResolve) {
+.controller('solutionController', function($scope, $rootScope, $state, $stateParams, $http, solutionResolve, imageResolve, commentResolve) {
+    // $rootScope.authenticated = true;
+    console.log(commentResolve);
     $scope.solution = solutionResolve.solution[0];
     $scope.matTable = solutionResolve.material;
     $scope.comments = commentResolve;
@@ -16,11 +18,15 @@ angular.module('sevenHillsApp').directive('backImg', function() {
     imageResolve.forEach(function(element, index, array){
         images.push({path:element});
     })
-    console.log($scope.images);
     if (!$scope.solution) {
         $state.go('404');
     }
     jQuery('.rating').rating('rate', parseInt($scope.solution.Difficulty));
+    $scope.deleteComment = function(index){
+        // Wait until we implement primary key
+        // $http.delete('/api/comment/' + $stateParams.solutionID + '/')
+        $scope.comments.splice(index, 1);
+    }
     $scope.submitComment = function() {
         if (($scope.cmtName == null) || ($scope.cmtName == "")) {
             $scope.cmtName = "Anonymous"

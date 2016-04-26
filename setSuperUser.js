@@ -27,7 +27,7 @@ var schema = {
   prompt.start();
   prompt.get(schema, function (err, result) {
     var newPass = bCrypt.hashSync(result.password, salt);
-    console.log('Command-line input received:');
+    console.log('New user name and password received:');
     console.log('  name: ' + result.username);
     console.log('  password: ' + result.password);
     newData[result.username] = newPass;

@@ -128,5 +128,13 @@ angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-a
         label: 'Solution'
       }
     })
+    .state('edit', {
+      url: 'solution/:solutionid/edit',
+      templateUrl: 'views/edit.html',
+      controller: 'editController',
+      ncyBreadcrumb: {
+        label: 'Edit'
+      }
+    })
   });
 

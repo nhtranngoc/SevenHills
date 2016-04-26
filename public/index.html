@@ -49,9 +49,10 @@
     </script>
     <script src="controllers/404Controller.js"></script>
     <script src="controllers/loginController.js"></script>
+    <script src="controllers/indexController.js"></script>
 </head>
 </html>
-<body>
+<body ng-controller="indexController">
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -74,23 +75,23 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active">
                         <a ui-sref="home">
-                            <i class="glyphicon glyphicon-home"></i>
+                            <i class="glyphicon glyphicon-home" title="Home"></i>
                         </a>
                     </li>
                     <li>
                         <a href="#">
-                            <i class="glyphicon glyphicon-question-sign"></i>
+                            <i class="glyphicon glyphicon-question-sign" title="Help"></i>
                         </a>
                     </li>
                     <li ng-show="authenticated">
-                        <a ui-sref="super">
-                            <i class="fa fa-user-times">
+                        <a ng-click="logout()">
+                            <i class="fa fa-user-times" title="Log Out">
                             </i>
                         </a>
                     </li>
                     <li ng-show="!authenticated">
                         <a ui-sref="login">
-                            <i class="fa fa-user">
+                            <i class="fa fa-user" title="Log In">
                             </i>
                         </a>
                     </li>
@@ -98,7 +99,7 @@
             </div>
         </div>
     </nav>
-    <div ncy-breadcrumb="">
+    <div ncy-breadcrumb>
     </div>
     <main>
         <a ng-show="authenticated">Logged in as {{ currentUser }}</a>

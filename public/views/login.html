@@ -1,16 +1,52 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <div ng-show="error_message != ''" class="alert alert-danger">
-        {{ error_message }}
-      </div>
-      <form ng-submit="auth('/auth/login')" class="form">
-        <label for="usernameInput" class="sr-only">User Name</label>
-        <input ng-model="user.username" type="text" id="usernameInput" class="form-control" placeholder="User Name" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input ng-model="user.password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <button class="btn btn-lg btn-primary pull-right">Log In</button>
-      </form>
+    <div class="col-md-12 text-center">
+        <h1 style="margin-bottom:30px">
+            Admin Login
+        </h1>
     </div>
-  </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div ng-show="error_message != ''"
+                 class="alert alert-danger"
+                 >
+                {{ error_message }}
+            </div>
+            <form ng-submit="auth('/auth/login')"
+                  class="form"
+                  >
+                <div class="form-group">
+                  <label for="usernameInput"
+                         class="sr-only"
+                         >
+                      User Name
+                  </label>
+                  <input ng-model="user.username"
+                         type="text"
+                         id="usernameInput"
+                         class="form-control"
+                         placeholder="User Name"
+                         required
+                         autofocus
+                         />
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword"
+                         class="sr-only"
+                         >
+                      Password
+                  </label>
+                  <input ng-model="user.password"
+                         type="password"
+                         id="inputPassword"
+                         class="form-control"
+                         placeholder="Password"
+                         required
+                         />
+                </div>
+                <button class="btn btn-lg btn-primary pull-right">
+                    Log In
+                </button>
+            </form>
+        </div>
+    </div>
 </div>
