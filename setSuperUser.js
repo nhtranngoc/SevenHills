@@ -5,7 +5,7 @@
 
 var prompt = require('prompt');
 var jsonFile = require('jsonfile');
-var bCrypt = require('bcrypt');
+var bCrypt = require('bcryptjs');
 var salt = bCrypt.genSaltSync(10);
 var newData = {};
 

@@ -3,9 +3,16 @@
 <div class="section">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div ng-show="!edit" class="col-md-12">
                 <h1 class="text-center">
                 Add a Solution
+                <br/>
+                <br/>
+                </h1>
+            </div>
+             <div ng-show="edit" class="col-md-12">
+                <h1 class="text-center">
+                Edit solution
                 <br/>
                 <br/>
                 </h1>
@@ -275,9 +282,14 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10 text-center">
+                <div ng-show="!edit" class="col-sm-offset-2 col-sm-10 text-center">
                     <button class="btn btn-hg btn-primary" type="submit">
-                    Submit
+                    Add Solution 
+                    </button>
+                </div>
+                <div ng-show="edit" class="col-sm-offset-2 col-sm-10 text-center">
+                    <button class="btn btn-hg btn-primary" type="submit">
+                    Edit Solution
                     </button>
                 </div>
             </div>

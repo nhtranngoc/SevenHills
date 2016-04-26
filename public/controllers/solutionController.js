@@ -9,7 +9,8 @@ angular.module('sevenHillsApp').directive('backImg', function() {
 })
 .controller('solutionController', function($scope, $rootScope, $state, $stateParams, $http, solutionResolve, imageResolve, commentResolve) {
     // $rootScope.authenticated = true;
-    console.log(commentResolve);
+    // $rootScope.currentUser = 'NAMNAMNAM';
+    console.log(solutionResolve);
     $scope.solution = solutionResolve.solution[0];
     $scope.matTable = solutionResolve.material;
     $scope.comments = commentResolve;
@@ -22,6 +23,11 @@ angular.module('sevenHillsApp').directive('backImg', function() {
         $state.go('404');
     }
     jQuery('.rating').rating('rate', parseInt($scope.solution.Difficulty));
+    $scope.editSolution = function(){
+        $rootScope.edit = true;
+        $rootScope.solutionToEdit = solutionResolve;
+        $state.go('add');
+    }
     $scope.deleteComment = function(index){
         // Wait until we implement primary key
         // $http.delete('/api/comment/' + $stateParams.solutionID + '/')

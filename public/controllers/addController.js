@@ -1,8 +1,23 @@
-angular.module('sevenHillsApp').controller('addController', function($scope, $http, $state, Upload, tagResolve, materialResolve) {
+angular.module('sevenHillsApp').controller('addController', function($scope, $rootScope, $http, $state, Upload, tagResolve, materialResolve) {
     $scope.materials = materialResolve;
-    console.log(materialResolve)
     $scope.tags = tagResolve;
     $scope.category = [];
+    $scope.formItems = [];
+    if ($rootScope.edit == true) {
+        //Populate add form with data from $rootScope.solutionToEdit;
+        var solution = $rootScope.solutionToEdit.solution[0];
+        var tags = $rootScope.solutionToEdit.tags;
+        var materials = $rootScope.solutionToEdit.material;
+        $scope.solName = solution.SolutionName;
+        $scope.solDes = solution.Description;
+        tags.forEach(function(element, index, array){
+            $scope.category.push(element.TagName);
+        })
+        // materials.forEach(function(element, index, array){
+        //     $scope.formItems.push({element.select.MaterialName})
+        // })
+
+    }
     $scope.refreshResults = function($select) {
         var search = $select.search,
             list = angular.copy($select.items),
@@ -41,7 +56,6 @@ angular.module('sevenHillsApp').controller('addController', function($scope, $ht
         }
     }
     $scope.mat = {};
-    $scope.formItems = [];
     $scope.addMat = function() {
         var cur = angular.copy($scope.mat);
         $scope.formItems.push(cur);

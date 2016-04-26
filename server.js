@@ -12,8 +12,7 @@ var primaryRoutes = require('./routes/main.js');
 var dbRoutes = require('./routes/db.js');
 var uploadRoutes = require('./routes/upload.js');
 var authRoutes = require('./routes/authenticate.js');
-var app = express();
-
+var sess;
 //====================================================
 var app = express();
 var logDirectory = __dirname + '/log';
@@ -34,7 +33,6 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(session({secret:'ssshh'}));
-sess = null;
 app.use('/', primaryRoutes);
 app.use('/', dbRoutes);
 app.use('/', uploadRoutes);

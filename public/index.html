@@ -68,12 +68,15 @@
                     <span class="icon-bar">
                     </span>
                 </button>
-                <a class="navbar-brand" rel="home" href="http://www.sevenhills.org" title="Seven Hills Foundation">
+                <a class="navbar-brand" rel="home" href="http://staff.sevenhills.org" title="Seven Hills Foundation">
                     <img id="logo" src="res/img/logo.png">
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-ex-collapse">
                 <ul class="nav navbar-nav navbar-right">
+                    <li ng-show="authenticated">
+                                <a> {{ currentUser }} </a>
+                    </li>
                     <li class="active">
                         <a ui-sref="home">
                             <i class="glyphicon glyphicon-home" title="Home"></i>
@@ -103,7 +106,6 @@
     <div ncy-breadcrumb>
     </div>
     <main>
-        <a ng-show="authenticated">Logged in as {{ currentUser }}</a>
         <div ui-view="">
         </div>
     </main>
