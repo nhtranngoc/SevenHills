@@ -1,7 +1,3 @@
-$('.selectpicker').selectpicker({
-    style: 'btn-info',
-    size: 4
-});
 $('.rating').rating({
     extendSymbol: function(rate) {
         $(this).tooltip({
@@ -11,6 +7,3 @@ $('.rating').rating({
         });
     }
 });
-function doSomething() {
-    alert('I am so good at naming things.');
-}
