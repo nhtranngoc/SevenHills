@@ -7,7 +7,7 @@ angular.module('sevenHillsApp').directive('backImg', function() {
         });
     };
 })
-.controller('solutionController', function($scope, $rootScope, $state, $stateParams, $http, solutionResolve, imageResolve, commentResolve) {
+.controller('solutionController', function($scope, $rootScope, $state, $stateParams, $http, Notification, solutionResolve, imageResolve, commentResolve) {
     $rootScope.authenticated = true;
     $rootScope.currentUser = 'NAMNAMNAM';
     console.log(solutionResolve);
@@ -27,6 +27,25 @@ angular.module('sevenHillsApp').directive('backImg', function() {
         $rootScope.edit = true;
         $rootScope.solutionToEdit = solutionResolve;
         $state.go('add');
+    }
+    $scope.deleteSolution = function(){
+        console.log($scope.solution.solutionid);
+        $http({
+            url: '/api/delete',
+            method: 'POST',
+            data: {
+                solutionID: $scope.solution.solutionid
+            },
+            headers: {'Content-Type': 'application/json;charset=utf-8'}
+        } ).then(
+            function(data){
+                $rootScope.message = "Solution deleted successfully."
+                $state.go('home', {}, {reload: true});
+            }, 
+            function(data, status){
+                console.log(status);
+                Notification.error("Oops, something went wrong. Error code " + status);
+            })
     }
     $scope.deleteComment = function(index){
         // Wait until we implement primary key

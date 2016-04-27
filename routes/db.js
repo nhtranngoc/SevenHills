@@ -4,6 +4,8 @@ var mysql = require('mysql');
 var async = require('async');
 var CronJob = require('cron').CronJob;
 var argv = require('minimist')(process.argv.slice(2));
+var rimraf = require('rimraf');
+var path = require('path');
 var secretFile = ('../config/secret.json');
 var config;
 // CONNECT TO DATABASE =============================================================
@@ -232,13 +234,11 @@ router.post('/api/submit', function(req, res) {
         console.log("Inserted solution number " + result);
     });
     // res.send("5");
-    console.log(formSubmit);
     console.log('========FORM SUBMITTED=========');
 })
 
 router.post('/api/update', function(req, res){
     var formSubmit = req.body;
-    console.log("Submitting form for solution: " + formSubmit.Name);
     var solution = {
         SolutionName: formSubmit.Name,
         Description: formSubmit.Description,
@@ -324,6 +324,43 @@ router.post('/api/update', function(req, res){
         }], function(err, results){
             if (err) throw err;
             res.send("Updated successfully");
+        })
+        console.log('========FORM UPDATED=========');
+
+})
+
+router.post('/api/delete', function(req, res){
+    var solutionID = req.body.solutionID;
+    console.log("Deleting solution " + solutionID);
+    async.series([
+        function deleteTags(callback) {
+            console.log("Deleting solution tags");
+            connection.query('DELETE FROM solutiontags WHERE solutionid = ?', solutionID, function(err, results) {
+                callback(err);
+            })
+        },
+        function deleteMaterials(callback) {
+            console.log("Deleting solution requirements");
+            connection.query('DELETE FROM requirement WHERE solutionid = ?', solutionID, function(err, results) {
+                callback(err);
+            })
+        },
+        function deleteSolution(callback) {
+            console.log("Deleting solution");
+            connection.query('DELETE FROM solutions WHERE solutionid = ?', solutionID, function(err, results) {
+                callback(err);
+            })
+        },
+        function deleteImages(callback) {
+            var deletePath = path.join('./public/uploaded/files/', solutionID.toString());
+            console.log("Deleting images at " + deletePath);
+            rimraf(deletePath, function(err){
+                callback(err);
+            })
+        }], function(err, results) {
+            if (err) throw err;
+            res.send("Deleted successfully");
+            console.log('========FORM UPDATED=========');
         })
 })
 module.exports = router;
