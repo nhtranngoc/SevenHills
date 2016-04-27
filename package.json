@@ -22,6 +22,7 @@
     "jasmine-node": "^1.14.5",
     "jsonfile": "^2.3.0",
     "minimist": "^1.2.0",
+    "mkdirp": "^0.5.1",
     "morgan": "*",
     "mysql": "^2.10.2",
     "prompt": "^1.0.0",

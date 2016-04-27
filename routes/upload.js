@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs');
+var mkdirp = require('mkdirp');
 var async = require('async');
 var path = require('path');
 var multipartyConfig;
@@ -21,26 +22,36 @@ router.post('/api/image', function(req, res){
 	console.log("Requesting images for solution " + req.body.solutionID);
 	var newFolderPath = path.join(filePath, req.body.solutionID.toString());
 	fs.readdir(newFolderPath, function(err, files){
-		if (err) {
+		if (err || !files.length) {
             res.sendStatus(404);
-        }
-		res.send(files);
+        } else res.send(files);
 	})
 })
 
 router.delete('/api/image', function(req, res){
-    console.log("Request to delete image(s) ");
+    console.log("Request to delete image(s) for solution " + req.body.solutionID);
+    var images = req.body.images;
+    async.each(images, function(item, callback){
+        var newFile = path.join('./public', item);
+        console.log("Deleting image at " + newFile);
+        fs.unlinkSync(newFile);
+        callback();
+    }, function(err){
+        if (err) res.send(err);
+    })
+    res.send("k.");
 })
 
 router.post('/upload', multipartyMiddleware, function(req, res) {
     var files = req.files.files;
-    var id = parseInt(req.body.id.solutionid);
+    console.log(req.body);
+    var id = parseInt(req.body.id);
     var exists = 0;
     console.log("Sending image for solution " + id);
     var newFolderPath = path.join(filePath, id.toString());
     async.series({
         mkdir: function(callback) {
-            fs.mkdir(newFolderPath, function(err) {
+            mkdirp(newFolderPath, function(err) {
                 callback(err);
             })
         },

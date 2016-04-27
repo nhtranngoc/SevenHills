@@ -1,9 +1,28 @@
-angular.module('sevenHillsApp', ['ngSanitize', 'ngMessages' ,'ui.router', 'ncy-angular-breadcrumb', 'ui.select', 'ngFileUpload', 'ui.bootstrap'])
+angular.module('sevenHillsApp', [
+              'ngSanitize',
+              'ngMessages', 
+              'ui.router', 
+              'ncy-angular-breadcrumb', 
+              'ui.select', 
+              'ngFileUpload', 
+              'ui.bootstrap',
+              'ui-notification'])
   .config(function($breadcrumbProvider) {
     $breadcrumbProvider.setOptions({
       prefixStateName: 'home'
     });
   })
+  .config(function(NotificationProvider) {
+        NotificationProvider.setOptions({
+            delay: 8000,
+            startTop: 20,
+            startRight: 10,
+            verticalSpacing: 20,
+            horizontalSpacing: 20,
+            positionX: 'right',
+            positionY: 'bottom'
+        });
+    })
   // Routing Configuration
   .config(function ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise("/");

@@ -14,6 +14,7 @@ angular.module('sevenHillsApp')
                 if (data.state == "success") {
                     $rootScope.authenticated = true;
                     $rootScope.currentUser = data.user;
+                    $rootScope.message = "Welcome, " + $rootScope.currentUser;
                     $state.go('home');
                     console.log("SUCCESS");
                 }

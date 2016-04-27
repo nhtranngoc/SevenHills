@@ -1,4 +1,4 @@
-angular.module('sevenHillsApp').controller('addController', function($scope, $rootScope, $http, $state, Upload, tagResolve, materialResolve) {
+angular.module('sevenHillsApp').controller('addController', function($scope, $q, $rootScope, $http, $state, Upload, tagResolve, materialResolve) {
     $scope.materials = materialResolve;
     $scope.tags = tagResolve;
     $scope.category = [];
@@ -23,7 +23,7 @@ angular.module('sevenHillsApp').controller('addController', function($scope, $ro
             })
         })
         $scope.solTime = solution.Time;
-        $scope.solDiff = solution.Difficulty.toString();
+        $scope.solDiff = !solution.Difficulty ? "0" : solution.Difficulty.toString();
         $scope.solCost = solution.EstimatedTotalCost;
         $scope.solInst = solution.Instruction;
         $http.post('/api/image', {solutionID: solution.solutionid}).then(
@@ -35,8 +35,13 @@ angular.module('sevenHillsApp').controller('addController', function($scope, $ro
                     return newURL;
                 })
                 $scope.$existFiles = urlData;
-                console.log($existFiles);
             })
+    }
+    var imageToRemove = [];
+    $scope.removeImage = function(fileURL, index){
+        $scope.$existFiles.splice(index, 1);
+        imageToRemove.push(fileURL);
+        console.log(imageToRemove);
     }
     $scope.refreshResults = function($select) {
         var search = $select.search,
@@ -80,7 +85,6 @@ angular.module('sevenHillsApp').controller('addController', function($scope, $ro
         var cur = angular.copy($scope.mat);
         $scope.formItems.push(cur);
         $scope.mat = {};
-        console.log($scope.formItems);
     }
     $scope.clear = function($event, $select) {
         //stops click event bubbling
@@ -145,34 +149,76 @@ angular.module('sevenHillsApp').controller('addController', function($scope, $ro
             Instruction: $scope.solInst
         };
         if (!$rootScope.edit) {
+            //This could've been handled better.
             $http.post('/api/submit', formInfo).then(function(data) {
-                console.log(data);
                 if (files && files.length) {
                     Upload.upload({
                         url: '/upload',
                         method: 'POST',
                         data: {
                             files: files,
-                            id: data.data
+                            id: data.data.solutionid
                         }
                     }).then(function(resp) {
-                        console.log('Success' + resp.config);
-                        $state.go($state.current, {}, {
-                            reload: true
-                        });
-                        // console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+                        unSetAdd();
                     }, function(resp) {
                         console.log('Error status: ' + resp.status);
                     }, function(evt) {
                         $scope.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                     });
+                } else {
+                    unSetAdd();
                 }
             }, function(data, status) {
                 console.log(status, data);
             });
         } else {
             //If edit mode is true, update.
-
+            formInfo.solutionID = solution.solutionid;
+            console.log(formInfo);
+            $q.all([$http.post('/api/update', formInfo),
+                    $http({
+                        url: '/api/image',
+                        method: 'DELETE',
+                        data: {
+                            solutionID:solution.solutionid, 
+                            images:imageToRemove
+                        },
+                        headers: {'Content-Type': 'application/json;charset=utf-8'}
+                    })])
+            .then(function(data){
+                if (files && files.length) {
+                    Upload.upload({
+                        url: '/upload',
+                        method: 'POST',
+                        data: {
+                            files: files,
+                            id: solution.solutionid
+                        }
+                    }).then(function(resp) {
+                        unSetEdit();
+                    }, function(resp) {
+                        console.log('Error status: ' + resp.status);
+                    }, function(evt) {
+                        $scope.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                    });
+                } else {
+                    // console.log(data);
+                    unSetEdit();
+                }
+            }, function(data, status){
+                    console.log(status, data);
+                })
         }
+    }
+    var unSetEdit = function() {
+        $rootScope.edit = false;
+        $rootScope.message = "Solution updated successfully!";
+        $state.go('home');
+    }
+
+    var unSetAdd = function() {
+        $rootScope.message = "Added solution successfully!";
+        $state.go('home');
     }
 })

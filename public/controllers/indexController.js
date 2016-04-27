@@ -4,6 +4,7 @@ angular.module('sevenHillsApp')
       $http.get('/auth/logout').then(
       	function(data){
       		$rootScope.authenticated = false;
+      		$rootScope.message = "Goodbye, " + $rootScope.currentUser;
       		$rootScope.currentUser = null;
       		$state.go($state.current, {}, {reload: true});
       	});
