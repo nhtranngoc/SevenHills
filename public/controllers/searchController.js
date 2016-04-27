@@ -15,6 +15,11 @@ angular.module('sevenHillsApp')
     $scope.searchBar = $scope.searchString;
     $scope.results = searchResolve;
     $scope.num = $scope.results.length;
+    if (!$scope.searchString){
+        $scope.totalRes = "Showing all " + $scope.num + " results";
+    } else {
+        $scope.totalRes = $scope.num + " results found for " + $scope.searchString;
+    }
     $scope.submitSearch = function() {
             $state.go('search', {
                 search: $scope.searchBar

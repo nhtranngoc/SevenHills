@@ -32,29 +32,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-1">
-                <h3>Filter tags</h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-               <ui-select multiple="" ng-model="category" on-remove="removeTag($item)" on-select="filter($item)" tagging="" tagging-label="(new)" theme="bootstrap">
-               <ui-select-match placeholder=" Select tags to filter">
-               {{$item}}
-           </ui-select-match>
-           <ui-select-choices repeat="tag in tags | filter:$select.search">
-           {{tag}}
-       </ui-select-choices>
-   </ui-select>
-</div>
-</div>
-</div>
-</div>
-<div class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-1">
-                <h3 id="changeThisToo">
-                    {{num}} results found for "{{searchString}}":
+                <h3>
+                    {{ totalRes }}
                 </h3>
             </div>
         </div>
