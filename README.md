@@ -1,4 +1,4 @@
-# Seven Hills Foundation
+# Seven Hills Assistive Technology Database
 
 #### Authors: Nam Tran Ngoc, Mike DiMilia
 With help from Ivan Melnikov (@ivanempire)
@@ -11,7 +11,12 @@ This is a web application for Seven Hills foundation's IQP project on developing
     2. Install bower: npm install bower
     3. Install dependencies: npm install
     4. Install bower dependencies: cd public && bower install
-    5. Run from main directory: npm start or node server.js
+    5. Set up superuser: node setSuperUser.js
+    6. Run from main directory: npm start or node server.js
+
+##### Deployment
+
+The server can be deployed using [forever](https://github.com/foreverjs/forever), with an user script that runs `forever` everytime the server boots.
 
 ##### Server parameters:
 
@@ -29,8 +34,10 @@ There are currently two parameters to be passed on to the server:
     * Routes stored in the 'routes' folder
         * Main routes
         * Database API routes
-        * Upload route
+        * Upload routes
+        * Authentication routes
     * With the exception of frameworks, media resources are stored in public/res
+    * Uploaded images are stored in uploaded/files
     * Frameworks stored in public/bower_components file
         * Boostrap, Bootstrap-rating, Bootstrap-select
         * Angular, Angular-resource, Angular-route
@@ -62,18 +69,16 @@ Since we are only expecting a small amount of super-users, or admins, we are cur
 
 To set a new username/password, or change existing one, please run the `setSuperUser.js` file.
 
-#### Deployment
+This is meant for single-user login only. Multiple users login should be stored securely somewhere else, or in a database. (PassportJS)[http://passportjs.org/] is a great tool for this.
 
-(Nothing here yet)
-
-#### To do List:
-
-- Form validation, with help text
-- Finish upload images/gallery feature
-- Edit solutions
-- UI Unit testing
-- Browsers/Platform compatibility testing
-- Database indexing
+#### Roadmap:
+Due to time constraints, there are things we wish could do but have not been able to do it. These are some of those things:
+    
+- Use ng-Animate to animate state transition
+- Use (Sequelize)[http://docs.sequelizejs.com/en/latest/] to perform query in a less messy way, or alternatively, use an ORM, Node-native database, such as MongoDB.
+- More throughout testing
+- Use a search engine server - since the "search engine" we are currently using is a substring search, which is fine on a small scale, but as the project progress, switching to a better search engine is inevitable. Furthermore, this can make features such as advanced filter and search possible.
+- Consistent namespace: Since there are no agreed upon namespace between the database and the rest of the web application, some of the variable names are inconsistent, which makes it confusing to write code for.
 
 #### Folder Structure
     ├── config

@@ -10,5 +10,4 @@ angular.module('sevenHillsApp').controller('mainController', function(Notificati
     }
     //Solution of the day
     $scope.sotd = sotdResolve;
-    // console.log(sotdResolve);
 })

@@ -9,14 +9,12 @@ angular.module('sevenHillsApp')
         $http.post(url, $scope.user)
         .then(function(response) {
             var data = response.data;
-            console.log(data);
             if (data.user != null) {
                 if (data.state == "success") {
                     $rootScope.authenticated = true;
                     $rootScope.currentUser = data.user;
                     $rootScope.message = "Welcome, " + $rootScope.currentUser;
                     $state.go('home');
-                    console.log("SUCCESS");
                 }
             } else {
                 $scope.error_message = data.message;

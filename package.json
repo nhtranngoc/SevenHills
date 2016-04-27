@@ -1,7 +1,7 @@
 {
   "name": "SevenHillsMockup",
-  "version": "0.0.5",
-  "description": "Frontend mockup for Seven Hills database",
+  "version": "1.0.0",
+  "description": "Frontend interface for Seven Hills database",
   "author": "Nam Tran",
   "contributor": "Mike DiMilia",
   "private": true,

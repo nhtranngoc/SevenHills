@@ -7,7 +7,6 @@ angular.module('sevenHillsApp').directive('backImg', function() {
         });
     };
 }).controller('solutionController', function($scope, $rootScope, $state, $stateParams, $http, Notification, solutionResolve, imageResolve, commentResolve) {
-    console.log(commentResolve);
     $scope.solution = solutionResolve.solution[0];
     $scope.matTable = solutionResolve.material;
     $scope.comments = commentResolve;
@@ -28,7 +27,6 @@ angular.module('sevenHillsApp').directive('backImg', function() {
         $state.go('add');
     }
     $scope.deleteSolution = function() {
-        console.log($scope.solution.solutionid);
         $http({
             url: '/api/delete',
             method: 'POST',
@@ -44,7 +42,7 @@ angular.module('sevenHillsApp').directive('backImg', function() {
                 reload: true
             });
         }, function(data, status) {
-            console.log(status);
+            // console.log(status);
             Notification.error("Oops, something went wrong. Error code " + status);
         })
     }
@@ -80,11 +78,11 @@ angular.module('sevenHillsApp').directive('backImg', function() {
                 name: curName,
                 commenttext: curData
             });
-            console.log($scope.addCmtForm);
+            // console.log($scope.addCmtForm);
             $scope.cmtName = "";
             $scope.cmtData = null;
         }, function(data, status) {
-            console.log(status, data);
+            // console.log(status, data);
         })
     }
 })

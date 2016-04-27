@@ -2,16 +2,9 @@ angular.module('sevenHillsApp', [
               'ngSanitize',
               'ngMessages', 
               'ui.router', 
-              'ncy-angular-breadcrumb', 
               'ui.select', 
               'ngFileUpload', 
-              'ui.bootstrap',
               'ui-notification'])
-  .config(function($breadcrumbProvider) {
-    $breadcrumbProvider.setOptions({
-      prefixStateName: 'home'
-    });
-  })
   .config(function(NotificationProvider) {
         NotificationProvider.setOptions({
             delay: 8000,
@@ -39,26 +32,17 @@ angular.module('sevenHillsApp', [
                 return parseInt(data.data.solutionid);
               })
           }
-      },
-      ncyBreadcrumb:{
-        label: 'Home'
       }
     })
     .state('404', {
       url: '/pagenotfound',
       templateUrl: 'views/404.html',
-      controller: '404Controller',
-      ncyBreadcrumb: {
-        label: 'Page Not Found'
-      }
+      controller: '404Controller'
     })
     .state('login', {
       url: '/login',
       templateUrl: 'views/login.html',
-      controller: 'loginController',
-      ncyBreadcrumb: {
-        label: 'Login'
-      }
+      controller: 'loginController'
     })
     .state('search', {
       url: '/index?search',
@@ -77,9 +61,6 @@ angular.module('sevenHillsApp', [
               return data.data
             })
           }
-      },
-      ncyBreadcrumb:{
-        label: 'Search Results'
       }
     })
     .state('add', {
@@ -101,9 +82,6 @@ angular.module('sevenHillsApp', [
               return data.data
             })
         }
-      },
-      ncyBreadcrumb:{
-        label: 'Add Solution'
       }
     })
     .state('solution', {
@@ -142,9 +120,6 @@ angular.module('sevenHillsApp', [
             return data.data;
           })
         }
-      },
-      ncyBreadcrumb:{
-        label: 'Solution'
       }
     })
   });

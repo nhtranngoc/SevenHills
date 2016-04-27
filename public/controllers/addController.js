@@ -28,7 +28,7 @@ angular.module('sevenHillsApp').controller('addController', function($scope, $q,
         $scope.solInst = solution.Instruction;
         $http.post('/api/image', {solutionID: solution.solutionid}).then(
             function(data){
-                console.log("Loaded image successfully");
+                // console.log("Loaded image successfully");
                 var urlData = data.data.map(function(element){
                     var newURL;
                     newURL = "/uploaded/files/" + solution.solutionid.toString() + "/" + element;
@@ -41,7 +41,7 @@ angular.module('sevenHillsApp').controller('addController', function($scope, $q,
     $scope.removeImage = function(fileURL, index){
         $scope.$existFiles.splice(index, 1);
         imageToRemove.push(fileURL);
-        console.log(imageToRemove);
+        // console.log(imageToRemove);
     }
     $scope.refreshResults = function($select) {
         var search = $select.search,
@@ -52,12 +52,12 @@ angular.module('sevenHillsApp').controller('addController', function($scope, $q,
             return item.materialid !== FLAG;
         });
         if (!search) {
-            console.log("on the list");
+            // console.log("on the list");
             //use the predefined list
             $select.items = list;
             // $scope.Vendor = search.Vendor;
         } else {
-            console.log("not on the list");
+            // console.log("not on the list");
             //manually add user input and set selection
             var userInputItem = {
                 materialid: FLAG,
@@ -73,7 +73,7 @@ angular.module('sevenHillsApp').controller('addController', function($scope, $q,
         var obj = $scope.materials.filter(function(obj) {
             return obj.MaterialName === $item.MaterialName;
         })[0];
-        console.log(obj);
+        // console.log(obj);
         if (obj == null) {
             $scope.showVendor = 1;
         } else {
@@ -109,7 +109,7 @@ angular.module('sevenHillsApp').controller('addController', function($scope, $q,
         $scope.category.push(cur);
     }
     $scope.removeTag = function($item) {
-        console.log($item);
+        // console.log($item);
         var index = $scope.category.indexOf($item);
         if (index > -1) {
             $scope.category.splice(index, 1);
@@ -128,10 +128,10 @@ angular.module('sevenHillsApp').controller('addController', function($scope, $q,
                     files: files
                 }
             }).then(function(resp) {
-                console.log('Success' + resp.config);
+                // console.log('Success' + resp.config);
                 // console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
             }, function(resp) {
-                console.log('Error status: ' + resp.status);
+                // console.log('Error status: ' + resp.status);
             }, function(evt) {
                 $scope.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             });
@@ -162,7 +162,7 @@ angular.module('sevenHillsApp').controller('addController', function($scope, $q,
                     }).then(function(resp) {
                         unSetAdd();
                     }, function(resp) {
-                        console.log('Error status: ' + resp.status);
+                        // console.log('Error status: ' + resp.status);
                     }, function(evt) {
                         $scope.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                     });
@@ -170,12 +170,12 @@ angular.module('sevenHillsApp').controller('addController', function($scope, $q,
                     unSetAdd();
                 }
             }, function(data, status) {
-                console.log(status, data);
+                // console.log(status, data);
             });
         } else {
             //If edit mode is true, update.
             formInfo.solutionID = solution.solutionid;
-            console.log(formInfo);
+            // console.log(formInfo);
             $q.all([$http.post('/api/update', formInfo),
                     $http({
                         url: '/api/image',
@@ -198,7 +198,7 @@ angular.module('sevenHillsApp').controller('addController', function($scope, $q,
                     }).then(function(resp) {
                         unSetEdit();
                     }, function(resp) {
-                        console.log('Error status: ' + resp.status);
+                        // console.log('Error status: ' + resp.status);
                     }, function(evt) {
                         $scope.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                     });
@@ -207,7 +207,7 @@ angular.module('sevenHillsApp').controller('addController', function($scope, $q,
                     unSetEdit();
                 }
             }, function(data, status){
-                    console.log(status, data);
+                    // console.log(status, data);
                 })
         }
     }
