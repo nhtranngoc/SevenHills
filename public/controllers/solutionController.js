@@ -8,8 +8,6 @@ angular.module('sevenHillsApp').directive('backImg', function() {
     };
 })
 .controller('solutionController', function($scope, $rootScope, $state, $stateParams, $http, Notification, solutionResolve, imageResolve, commentResolve) {
-    $rootScope.authenticated = true;
-    $rootScope.currentUser = 'NAMNAMNAM';
     console.log(solutionResolve);
     $scope.solution = solutionResolve.solution[0];
     $scope.matTable = solutionResolve.material;

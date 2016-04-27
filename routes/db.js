@@ -258,120 +258,133 @@ router.post('/api/update', function(req, res) {
         EstimatedTotalCost: formSubmit.Cost,
         Time: formSubmit.Time
     };
-    async.series([
-        function updateSolutions(callback) {
-            console.log('Updating solution ' + solution.SolutionName);
-            connection.query('UPDATE solutions SET ? WHERE solutionid = ?', [solution, req.body.solutionID], function(err, results) {
-                callback(err);
-            })
-        },
-        function deleteTags(callback) {
-            console.log('Deleting old tags');
-            connection.query('DELETE FROM solutiontags WHERE solutionID = ?', req.body.solutionID, function(err, results) {
-                callback(err);
-            })
-        },
-        function iterateTags(callback) {
-            console.log('Adding new tags');
-            async.each(formSubmit.Category, function(element, callback) {
-                console.log("Processing tag: " + element);
-                //Check if tag exists
-                connection.query('SELECT COUNT(*) as count from tags WHERE TagName = ?', element, function(err, rows, fields) {
-                    //If not, add to tag list
-                    if (rows[0].count == 0) {
-                        connection.query('INSERT INTO tags SET ?', {
+    global.sess = req.session;
+    if (global.sess.authenticated) {
+        async.series([
+            function updateSolutions(callback) {
+                console.log('Updating solution ' + solution.SolutionName);
+                connection.query('UPDATE solutions SET ? WHERE solutionid = ?', [solution, req.body.solutionID], function(err, results) {
+                    callback(err);
+                })
+            },
+            function deleteTags(callback) {
+                console.log('Deleting old tags');
+                connection.query('DELETE FROM solutiontags WHERE solutionID = ?', req.body.solutionID, function(err, results) {
+                    callback(err);
+                })
+            },
+            function iterateTags(callback) {
+                console.log('Adding new tags');
+                async.each(formSubmit.Category, function(element, callback) {
+                    console.log("Processing tag: " + element);
+                    //Check if tag exists
+                    connection.query('SELECT COUNT(*) as count from tags WHERE TagName = ?', element, function(err, rows, fields) {
+                        //If not, add to tag list
+                        if (rows[0].count == 0) {
+                            connection.query('INSERT INTO tags SET ?', {
+                                tagName: element
+                            }, function(err, res) {
+                                if (err) throw err;
+                            })
+                        }
+                        connection.query('INSERT INTO solutiontags SET ?', {
+                            solutionID: req.body.solutionID,
                             tagName: element
                         }, function(err, res) {
                             if (err) throw err;
                         })
-                    }
-                    connection.query('INSERT INTO solutiontags SET ?', {
-                        solutionID: req.body.solutionID,
-                        tagName: element
-                    }, function(err, res) {
-                        if (err) throw err;
                     })
                 })
-            })
-            callback(null);
-        },
-        function deleteMaterials(callback) {
-            console.log('Deleting old material requirements');
-            connection.query('DELETE FROM requirement WHERE solutionID = ?', req.body.solutionID, function(err, results) {
-                callback(err);
-            })
-        },
-        function iterateMaterials(callback) {
-            async.each(formSubmit.Materials, function(element, callback) {
-                console.log("Processing material: " + element.select.MaterialName);
-                //Check if material exists
-                connection.query('SELECT * from material WHERE MaterialName = ?', element.select.MaterialName, function(err, rows, fields) {
-                    var ifExist = rows.length;
-                    var currentRow = rows[0];
-                    var matToInsert = {}
-                    if (ifExist == 0) {
-                        currentMatCount++;
-                        matToInsert.MaterialID = currentMatCount;
-                        matToInsert.MaterialName = element.select.MaterialName;
-                        matToInsert.vendor = element.select.Vendor;
-                        connection.query('INSERT INTO Material SET ?', matToInsert, function(err, res) {
+                callback(null);
+            },
+            function deleteMaterials(callback) {
+                console.log('Deleting old material requirements');
+                connection.query('DELETE FROM requirement WHERE solutionID = ?', req.body.solutionID, function(err, results) {
+                    callback(err);
+                })
+            },
+            function iterateMaterials(callback) {
+                async.each(formSubmit.Materials, function(element, callback) {
+                    console.log("Processing material: " + element.select.MaterialName);
+                    //Check if material exists
+                    connection.query('SELECT * from material WHERE MaterialName = ?', element.select.MaterialName, function(err, rows, fields) {
+                        var ifExist = rows.length;
+                        var currentRow = rows[0];
+                        var matToInsert = {}
+                        if (ifExist == 0) {
+                            currentMatCount++;
+                            matToInsert.MaterialID = currentMatCount;
+                            matToInsert.MaterialName = element.select.MaterialName;
+                            matToInsert.vendor = element.select.Vendor;
+                            connection.query('INSERT INTO Material SET ?', matToInsert, function(err, res) {
+                                if (err) throw err;
+                            })
+                        } else {
+                            matToInsert.MaterialID = currentRow.materialid;
+                        }
+                        var requirement = {
+                            SolutionID: req.body.solutionID,
+                            MaterialID: matToInsert.MaterialID,
+                            Amount: element.quan
+                        }
+                        connection.query('INSERT INTO requirement SET ?', requirement, function(err, res) {
                             if (err) throw err;
+                            console.log("Inserted material ID " + requirement.MaterialID);
                         })
-                    } else {
-                        matToInsert.MaterialID = currentRow.materialid;
-                    }
-                    var requirement = {
-                        SolutionID: req.body.solutionID,
-                        MaterialID: matToInsert.MaterialID,
-                        Amount: element.quan
-                    }
-                    connection.query('INSERT INTO requirement SET ?', requirement, function(err, res) {
-                        if (err) throw err;
-                        console.log("Inserted material ID " + requirement.MaterialID);
                     })
                 })
-            })
-            callback(null);
-        }
-    ], function(err, results) {
-        if (err) throw err;
-        res.send("Updated successfully");
-    })
-    console.log('========FORM UPDATED=========');
+                callback(null);
+            }
+        ], function(err, results) {
+            if (err) throw err;
+            res.send("Updated successfully");
+            console.log('========FORM UPDATED=========');
+        })
+    } else {
+        //Unauthorized
+        console.log("Not authorized to update solution");
+        res.sendStatus(401);
+    }
 })
 router.post('/api/delete', function(req, res) {
     var solutionID = req.body.solutionID;
     console.log("Deleting solution " + solutionID);
-    async.series([
-        function deleteTags(callback) {
-            console.log("Deleting solution tags");
-            connection.query('DELETE FROM solutiontags WHERE solutionid = ?', solutionID, function(err, results) {
-                callback(err);
-            })
-        },
-        function deleteMaterials(callback) {
-            console.log("Deleting solution requirements");
-            connection.query('DELETE FROM requirement WHERE solutionid = ?', solutionID, function(err, results) {
-                callback(err);
-            })
-        },
-        function deleteSolution(callback) {
-            console.log("Deleting solution");
-            connection.query('DELETE FROM solutions WHERE solutionid = ?', solutionID, function(err, results) {
-                callback(err);
-            })
-        },
-        function deleteImages(callback) {
-            var deletePath = path.join('./public/uploaded/files/', solutionID.toString());
-            console.log("Deleting images at " + deletePath);
-            rimraf(deletePath, function(err) {
-                callback(err);
-            })
-        }
-    ], function(err, results) {
-        if (err) throw err;
-        res.send("Deleted successfully");
-        console.log('========FORM UPDATED=========');
-    })
+    global.sess = req.session;
+    if (global.sess.authenticated) {
+        async.series([
+            function deleteTags(callback) {
+                console.log("Deleting solution tags");
+                connection.query('DELETE FROM solutiontags WHERE solutionid = ?', solutionID, function(err, results) {
+                    callback(err);
+                })
+            },
+            function deleteMaterials(callback) {
+                console.log("Deleting solution requirements");
+                connection.query('DELETE FROM requirement WHERE solutionid = ?', solutionID, function(err, results) {
+                    callback(err);
+                })
+            },
+            function deleteSolution(callback) {
+                console.log("Deleting solution");
+                connection.query('DELETE FROM solutions WHERE solutionid = ?', solutionID, function(err, results) {
+                    callback(err);
+                })
+            },
+            function deleteImages(callback) {
+                var deletePath = path.join('./public/uploaded/files/', solutionID.toString());
+                console.log("Deleting images at " + deletePath);
+                rimraf(deletePath, function(err) {
+                    callback(err);
+                })
+            }
+        ], function(err, results) {
+            if (err) throw err;
+            res.send("Deleted successfully");
+            console.log('========FORM UPDATED=========');
+        })
+    } else {
+        console.log("Not authorized to delete solution");
+        res.sendStatus(401);
+    }
 })
 module.exports = router;
