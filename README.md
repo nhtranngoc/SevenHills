@@ -69,13 +69,13 @@ Since we are only expecting a small amount of super-users, or admins, we are cur
 
 To set a new username/password, or change existing one, please run the `setSuperUser.js` file.
 
-This is meant for single-user login only. Multiple users login should be stored securely somewhere else, or in a database. (PassportJS)[http://passportjs.org/] is a great tool for this.
+This is meant for single-user login only. Multiple users login should be stored securely somewhere else, or in a database. [PassportJS](http://passportjs.org/) is a great tool for this.
 
 #### Roadmap:
 Due to time constraints, there are things we wish could do but have not been able to do it. These are some of those things:
     
 - Use ng-Animate to animate state transition
-- Use (Sequelize)[http://docs.sequelizejs.com/en/latest/] to perform query in a less messy way, or alternatively, use an ORM, Node-native database, such as MongoDB.
+- Use [Sequelize](http://docs.sequelizejs.com/en/latest/) to perform query in a less messy way, or alternatively, use an ORM, Node-native database, such as MongoDB.
 - More throughout testing
 - Use a search engine server - since the "search engine" we are currently using is a substring search, which is fine on a small scale, but as the project progress, switching to a better search engine is inevitable. Furthermore, this can make features such as advanced filter and search possible.
 - Consistent namespace: Since there are no agreed upon namespace between the database and the rest of the web application, some of the variable names are inconsistent, which makes it confusing to write code for.
