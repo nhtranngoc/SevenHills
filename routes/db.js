@@ -57,21 +57,29 @@ sotdJob.start();
 //Super hacky substring search engine.
 router.get('/index', function(req, res) {
     console.log("Searching for " + req.query.search);
-    var searchArr = req.query.search.split(" ");
-    queryStr = 'SELECT * from solutions NATURAL JOIN solutiontags WHERE ';
-    var queryArr = [];
-    searchArr.forEach(function(element, index, array) {
-        queryArr.push("SolutionName LIKE '%" + element + "%'");
-        queryArr.push("Description LIKE '%" + element + "%'");
-        queryArr.push("TagName LIKE '%" + element + "%'");
-    })
-    queryStr += queryArr.join(" OR ") + " GROUP BY solutionid";
-    connection.query(queryStr, function(err, rows, fields) {
-        if (err) throw err;
-        console.log(rows);
-        console.log("Total number of results: " + rows.length);
-        res.send(rows);
-    })
+    if (!req.query.search) {
+        connection.query("SELECT * from solutions NATURAL JOIN solutiontags GROUP BY solutionid", function(err, rows, fields) {
+            if (err) throw err;
+            console.log("Total of " + rows.length + " solutions");
+            res.send(rows);
+        })
+    } else {
+        var searchArr = req.query.search.split(" ");
+        queryStr = 'SELECT * from solutions NATURAL JOIN solutiontags WHERE ';
+        var queryArr = [];
+        searchArr.forEach(function(element, index, array) {
+            queryArr.push("SolutionName LIKE '%" + element + "%'");
+            queryArr.push("Description LIKE '%" + element + "%'");
+            queryArr.push("TagName LIKE '%" + element + "%'");
+        })
+        queryStr += queryArr.join(" OR ") + " GROUP BY solutionid";
+        connection.query(queryStr, function(err, rows, fields) {
+            if (err) throw err;
+            console.log(rows);
+            console.log("Total number of results: " + rows.length);
+            res.send(rows);
+        })
+    }
 })
 router.get('/api/sotd', function(req, res) {
     // console.log("Requesting solution of the day!");
@@ -112,9 +120,13 @@ router.post('/api/solution', function(req, res) {
                 callback(err, rows);
             })
         }
-    ], function(err, results){
+    ], function(err, results) {
         if (err) throw err;
-        res.send({solution: results[0], material: results[1], tags: results[2]});
+        res.send({
+            solution: results[0],
+            material: results[1],
+            tags: results[2]
+        });
     })
 })
 router.post('/api/comment', function(req, res) {
@@ -236,8 +248,7 @@ router.post('/api/submit', function(req, res) {
     // res.send("5");
     console.log('========FORM SUBMITTED=========');
 })
-
-router.post('/api/update', function(req, res){
+router.post('/api/update', function(req, res) {
     var formSubmit = req.body;
     var solution = {
         SolutionName: formSubmit.Name,
@@ -248,15 +259,15 @@ router.post('/api/update', function(req, res){
         Time: formSubmit.Time
     };
     async.series([
-        function updateSolutions(callback){
+        function updateSolutions(callback) {
             console.log('Updating solution ' + solution.SolutionName);
-            connection.query('UPDATE solutions SET ? WHERE solutionid = ?', [solution, req.body.solutionID], function(err, results){
+            connection.query('UPDATE solutions SET ? WHERE solutionid = ?', [solution, req.body.solutionID], function(err, results) {
                 callback(err);
             })
         },
-        function deleteTags(callback){
+        function deleteTags(callback) {
             console.log('Deleting old tags');
-            connection.query('DELETE FROM solutiontags WHERE solutionID = ?', req.body.solutionID, function(err, results){
+            connection.query('DELETE FROM solutiontags WHERE solutionID = ?', req.body.solutionID, function(err, results) {
                 callback(err);
             })
         },
@@ -286,7 +297,7 @@ router.post('/api/update', function(req, res){
         },
         function deleteMaterials(callback) {
             console.log('Deleting old material requirements');
-            connection.query('DELETE FROM requirement WHERE solutionID = ?', req.body.solutionID, function(err, results){
+            connection.query('DELETE FROM requirement WHERE solutionID = ?', req.body.solutionID, function(err, results) {
                 callback(err);
             })
         },
@@ -321,15 +332,14 @@ router.post('/api/update', function(req, res){
                 })
             })
             callback(null);
-        }], function(err, results){
-            if (err) throw err;
-            res.send("Updated successfully");
-        })
-        console.log('========FORM UPDATED=========');
-
+        }
+    ], function(err, results) {
+        if (err) throw err;
+        res.send("Updated successfully");
+    })
+    console.log('========FORM UPDATED=========');
 })
-
-router.post('/api/delete', function(req, res){
+router.post('/api/delete', function(req, res) {
     var solutionID = req.body.solutionID;
     console.log("Deleting solution " + solutionID);
     async.series([
@@ -354,13 +364,14 @@ router.post('/api/delete', function(req, res){
         function deleteImages(callback) {
             var deletePath = path.join('./public/uploaded/files/', solutionID.toString());
             console.log("Deleting images at " + deletePath);
-            rimraf(deletePath, function(err){
+            rimraf(deletePath, function(err) {
                 callback(err);
             })
-        }], function(err, results) {
-            if (err) throw err;
-            res.send("Deleted successfully");
-            console.log('========FORM UPDATED=========');
-        })
+        }
+    ], function(err, results) {
+        if (err) throw err;
+        res.send("Deleted successfully");
+        console.log('========FORM UPDATED=========');
+    })
 })
 module.exports = router;
