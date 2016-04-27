@@ -3,6 +3,8 @@
 #### Authors: Nam Tran Ngoc, Mike DiMilia
 With help from Ivan Melnikov (@ivanempire)
 
+![alt tag](https://raw.githubusercontent.com/nhtranngoc/SevenHills/master/home.png)
+
 This is a web application for Seven Hills foundation's IQP project on developing a database/search engine for searching appropriate Assistive Technology devices. 
 
 #### Installation & Run
