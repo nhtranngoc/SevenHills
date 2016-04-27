@@ -150,6 +150,18 @@ router.post('/api/comment', function(req, res) {
         res.sendStatus(200);
     }
 })
+
+router.delete('/api/comment', function(req, res) {
+    console.log("Requesting to delete comment " + req.body.commentID);
+    global.sess = req.session;
+    if (global.sess.authenticated) {
+        connection.query('DELETE FROM comments WHERE commentID = ?', req.body.commentID, function(err, results){
+            if (err) throw err;
+            res.send("Comment deleted");
+        })
+    } else res.sendStatus(401);
+})
+
 router.post('/api/submit', function(req, res) {
     var formSubmit = req.body;
     console.log("Submitting form for solution: " + formSubmit.Name);
