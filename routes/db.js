@@ -139,29 +139,25 @@ router.post('/api/comment', function(req, res) {
         })
     } else {
         //If posting comments
+        console.log("Adding comment for solution number " + req.body.solutionID);
         var theComment = {
             solutionid: req.body.solutionID,
             name: req.body.name,
             commenttext: req.body.commentText
         };
-        connection.query('INSERT INTO comments SET ?', theComment, function(err, res) {
+        connection.query('INSERT INTO comments SET ?', theComment, function(err, results) {
             if (err) throw err;
+            res.send({commentID: results.insertId});
         })
-        res.sendStatus(200);
     }
 })
-
 router.delete('/api/comment', function(req, res) {
     console.log("Requesting to delete comment " + req.body.commentID);
-    global.sess = req.session;
-    if (global.sess.authenticated) {
-        connection.query('DELETE FROM comments WHERE commentID = ?', req.body.commentID, function(err, results){
-            if (err) throw err;
-            res.send("Comment deleted");
-        })
-    } else res.sendStatus(401);
+    connection.query('DELETE FROM comments WHERE commentID = ?', req.body.commentID, function(err, results) {
+        if (err) throw err;
+        res.send("Comment deleted");
+    })
 })
-
 router.post('/api/submit', function(req, res) {
     var formSubmit = req.body;
     console.log("Submitting form for solution: " + formSubmit.Name);

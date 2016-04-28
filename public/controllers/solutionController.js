@@ -47,7 +47,6 @@ angular.module('sevenHillsApp').directive('backImg', function() {
         })
     }
     $scope.deleteComment = function(comment, index) {
-        // Wait until we implement primary key
         $http({
             url: '/api/comment',
             method: 'DELETE',
@@ -60,6 +59,8 @@ angular.module('sevenHillsApp').directive('backImg', function() {
         }).then(function(data) {
             Notification("Comment deleted");
             $scope.comments.splice(index, 1);
+        }, function(data) {
+            Notification.error({mesage:"Something went wrong."})
         })
     }
     $scope.submitComment = function() {
@@ -72,11 +73,13 @@ angular.module('sevenHillsApp').directive('backImg', function() {
             name: $scope.cmtName,
             commentText: $scope.cmtData
         }).then(function(data) {
+            console.log(data);
             var curName = angular.copy($scope.cmtName);
             var curData = angular.copy($scope.cmtData);
             $scope.comments.push({
                 name: curName,
-                commenttext: curData
+                commenttext: curData,
+                commentID: data.data.commentID
             });
             // console.log($scope.addCmtForm);
             $scope.cmtName = "";
