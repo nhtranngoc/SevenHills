@@ -47,11 +47,12 @@ angular.module('sevenHillsApp').directive('backImg', function() {
         })
     }
     $scope.deleteComment = function(comment, index) {
+        console.log(comment);
         $http({
             url: '/api/comment',
             method: 'DELETE',
             data: {
-                commentID: comment.commentID
+                commentID: comment.commentid
             },
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -79,7 +80,7 @@ angular.module('sevenHillsApp').directive('backImg', function() {
             $scope.comments.push({
                 name: curName,
                 commenttext: curData,
-                commentID: data.data.commentID
+                commentid: data.data.commentid
             });
             // console.log($scope.addCmtForm);
             $scope.cmtName = "";

@@ -147,7 +147,7 @@ router.post('/api/comment', function(req, res) {
         };
         connection.query('INSERT INTO comments SET ?', theComment, function(err, results) {
             if (err) throw err;
-            res.send({commentID: results.insertId});
+            res.send({commentid: results.insertId});
         })
     }
 })
