@@ -139,3 +139,6 @@ Due to time constraints, there are things we wish could do but have not been abl
     └── test
         └── test.js
 
+#### LICENSE
+
+MIT 
